@@ -1,11 +1,11 @@
 {
-    "name": "superdweebie/SdsUser",
+    "name": "superdweebie/SdsUserModule",
     "description": "Zend Framework 2 Module that provides user management",
     "type": "library",
     "keywords": [
         "zf2"
     ],
-    "homepage": "http://github.com/superdweebie/SdsUser",
+    "homepage": "http://github.com/superdweebie/SdsUserModule",
     "authors": [
         {
             "name": "Tim Roediger",
@@ -19,7 +19,7 @@
 
     "autoload": {
         "psr-0": {
-            "SdsAuthModule": "src/"
+            "SdsUserModule": "src/"
         },
         "classmap": [
             "./"
