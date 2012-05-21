@@ -1,4 +1,4 @@
-SdsUser
+SdsUserModule
 =======
 
 User management module
