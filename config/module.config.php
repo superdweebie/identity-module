@@ -6,7 +6,7 @@ return array(
                 'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver',
                 'namespace' => 'SdsUserModule\Model',
                 'paths' => array(
-                    'module/SdsUserModule/src/SdsUserModule/Model'
+                    'vendor/superdweebie/SdsUserModule/src/SdsUserModule/Model'                   
                 ),                             
             ),         
         ),
