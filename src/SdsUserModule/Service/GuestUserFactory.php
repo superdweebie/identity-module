@@ -10,11 +10,11 @@ class GuestUserFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = $serviceLocator->get('Configuration')->sds_user_config->guest_user;         
+        $config = $serviceLocator->get('Configuration')['sds_user_config']['guest_user'];         
         $instance = new User();
         $instance->setIsGuest(true);
-        $instance->addRoles($config->roles->toArray());
-        $instance->setUsername($config->username);        
+        $instance->addRoles($config['roles']);
+        $instance->setUsername($config['username']);        
         return $instance;        
     }
 }

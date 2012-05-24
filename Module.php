@@ -18,7 +18,7 @@ class Module
     public function loadMongoODMDrivers($e){
         $serviceLocator = $e->getTarget();
         $reader = $serviceLocator->get('Doctrine\Common\Annotations\CachedReader');
-        $config = $serviceLocator->get('Configuration')->sds_user_config->drivers->toArray();
+        $config = $serviceLocator->get('Configuration')['sds_user_config']['drivers'];
         $return = array();
         
         foreach($config as $params){
