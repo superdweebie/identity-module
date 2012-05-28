@@ -31,7 +31,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'guest_user' => 'SdsUserModule\Service\GuestUserFactory',
+                'guestUser' => 'SdsUserModule\Service\GuestUserFactory',
             )
         );
     }      

@@ -10,10 +10,12 @@ return array(
                 ),                             
             ),         
         ),
-        'guest_user' => array(
+        'guestUser' => array(
             'username' => 'guest',
             'roles' => array(
-                
+                array(
+                    'name' => 'guest'
+                ),
             ),
         ),
     ),
