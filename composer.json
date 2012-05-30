@@ -14,7 +14,8 @@
     ],
     "require": {
         "php": ">=5.3",
-        "ocramius/OcraComposer": "dev-master"
+        "ocramius/OcraComposer": "dev-master",
+        "superdweebie/SdsCommon": "dev-master"        
     },
 
     "autoload": {

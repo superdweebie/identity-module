@@ -2,16 +2,17 @@
 
 namespace SdsUserModule\Model;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
-    SdsDoctrineExtensions\User\Behaviour\AuthUser,
-    SdsDoctrineExtensions\Serializer\Behaviour\Serializer,
-    SdsDoctrineExtensions\ActiveUser\Behaviour\ActiveUser,
-    SdsDoctrineExtensions\AccessControl\Behaviour\UserAccessControl,    
-    SdsDoctrineExtensions\Readonly\Mapping\Annotation\Readonly as SDS_Readonly,
-    SdsDoctrineExtensions\Serializer\Mapping\Annotation\DoNotSerialize as SDS_DoNotSerialize;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use SdsDoctrineExtensions\User\Behaviour\AuthUser;
+use SdsDoctrineExtensions\Serializer\Behaviour\Serializer;
+use SdsDoctrineExtensions\ActiveUser\Behaviour\ActiveUser;
+use SdsDoctrineExtensions\AccessControl\Behaviour\UserAccessControl;
+use SdsDoctrineExtensions\Readonly\Mapping\Annotation\Readonly as SDS_Readonly;
+use SdsDoctrineExtensions\Serializer\Mapping\Annotation\DoNotSerialize as SDS_DoNotSerialize;
+use SdsCommon\AccessControl\User as CommonAccessControlUser;
 
 /** @ODM\Document */
-class User implements \JsonSerializable
+class User implements \JsonSerializable, CommonAccessControlUser
 {
     use AuthUser, Serializer, ActiveUser, UserAccessControl;
     
