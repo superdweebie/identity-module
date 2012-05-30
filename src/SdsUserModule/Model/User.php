@@ -9,7 +9,7 @@ use SdsDoctrineExtensions\ActiveUser\Behaviour\ActiveUser;
 use SdsDoctrineExtensions\AccessControl\Behaviour\UserAccessControl;
 use SdsDoctrineExtensions\Readonly\Mapping\Annotation\Readonly as SDS_Readonly;
 use SdsDoctrineExtensions\Serializer\Mapping\Annotation\DoNotSerialize as SDS_DoNotSerialize;
-use SdsCommon\AccessControl\User as CommonAccessControlUser;
+use SdsCommon\AccessControl\UserInterface as CommonAccessControlUser;
 
 /** @ODM\Document */
 class User implements \JsonSerializable, CommonAccessControlUser
