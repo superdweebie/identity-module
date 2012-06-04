@@ -3,18 +3,29 @@
 namespace SdsUserModule\Model;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use SdsDoctrineExtensions\User\Behaviour\AuthUser;
-use SdsDoctrineExtensions\Serializer\Behaviour\Serializer;
-use SdsDoctrineExtensions\ActiveUser\Behaviour\ActiveUser;
-use SdsDoctrineExtensions\AccessControl\Behaviour\UserAccessControl;
+use SdsDoctrineExtensions\User\Behaviour\AuthUserTrait;
+use SdsDoctrineExtensions\Serializer\Behaviour\SerializerTrait;
+use SdsDoctrineExtensions\ActiveUser\Behaviour\ActiveUserTrait;
+use SdsDoctrineExtensions\AccessControl\Behaviour\RoleAwareUserTrait;
 use SdsDoctrineExtensions\Readonly\Mapping\Annotation\Readonly as SDS_Readonly;
 use SdsDoctrineExtensions\Serializer\Mapping\Annotation\DoNotSerialize as SDS_DoNotSerialize;
-use SdsCommon\AccessControl\UserInterface as CommonAccessControlUser;
+use SdsCommon\User\UserInterface;
+use SdsCommon\User\AuthUserInterface;
+use SdsCommon\ActiveUser\ActiveUserInterface;
+use SdsCommon\AccessControl\RoleAwareUserInterface;
 
 /** @ODM\Document */
-class User implements \JsonSerializable, CommonAccessControlUser
+class User 
+implements 
+    \JsonSerializable, 
+    UserInterface, 
+    AuthUserInterface, 
+    RoleAwareUserInterface
 {
-    use AuthUser, Serializer, ActiveUser, UserAccessControl;
+    use AuthUserTrait;
+    use SerializerTrait;
+    use ActiveUserTrait;
+    use RoleAwareUserTrait;
     
     protected $objclass = 'User';
     
