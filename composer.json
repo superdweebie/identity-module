@@ -20,10 +20,8 @@
 
     "autoload": {
         "psr-0": {
-            "SdsUserModule": "src/"
-        },
-        "classmap": [
-            "./"
-        ]
+            "SdsUserModule": "src/",
+            "SdsUserModuleTest": "tests/"            
+        }
     }
 }
