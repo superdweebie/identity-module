@@ -6,11 +6,11 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use SdsUserModule\Model\User;
 
-class GuestUserFactory implements FactoryInterface
+class DefaultUserFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = $serviceLocator->get('Configuration')['sds_user_config']['guestUser'];         
+        $config = $serviceLocator->get('Configuration')['sdsUserConfig']['guestUser'];         
         $instance = new User();
         $instance->setIsGuest(true);
         $instance->addRoles($config['roles']);

@@ -9,22 +9,22 @@ use SdsDoctrineExtensions\ActiveUser\Behaviour\ActiveUserTrait;
 use SdsDoctrineExtensions\AccessControl\Behaviour\RoleAwareUserTrait;
 use SdsDoctrineExtensions\Readonly\Mapping\Annotation\Readonly as SDS_Readonly;
 use SdsDoctrineExtensions\Serializer\Mapping\Annotation\DoNotSerialize as SDS_DoNotSerialize;
-use SdsCommon\User\UserInterface;
 use SdsCommon\User\AuthUserInterface;
-use SdsCommon\ActiveUser\ActiveUserInterface;
+use SdsCommon\ActiveUser\ActiveUserAwareInterface;
+use SdsCommon\ActiveUser\ActiveUserAwareTrait;
 use SdsCommon\AccessControl\RoleAwareUserInterface;
 
 /** @ODM\Document */
 class User 
 implements 
     \JsonSerializable, 
-    UserInterface, 
     AuthUserInterface, 
-    RoleAwareUserInterface
+    RoleAwareUserInterface,
+    ActiveUserAwareInterface
 {
     use AuthUserTrait;
     use SerializerTrait;
-    use ActiveUserTrait;
+    use ActiveUserAwareTrait;
     use RoleAwareUserTrait;
     
     protected $objclass = 'User';
