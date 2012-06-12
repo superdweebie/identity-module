@@ -10,7 +10,7 @@ class DefaultUserFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = $serviceLocator->get('Configuration')['sdsUserConfig']['guestUser'];         
+        $config = $serviceLocator->get('Configuration')['sdsUserConfig']['defaultUser'];         
         $instance = new User();
         $instance->setIsGuest(true);
         $instance->addRoles($config['roles']);

@@ -1,11 +1,11 @@
 <?php
 return array(
     'sdsUserConfig' => array( 
-        'guestUser' => array(
-            'username' => 'guest',
+        'defaultUser' => array(
+            'username' => 'default',
             'roles' => array(
                 array(
-                    'name' => 'guest'
+                    'name' => 'default'
                 ),
             ),
         ),
