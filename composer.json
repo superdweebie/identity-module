@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "ocramius/OcraComposer": "dev-master",
+        "zendframework/zendframework": "dev-master",
         "superdweebie/SdsCommon": "dev-master"        
     },
 
