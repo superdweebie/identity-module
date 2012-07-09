@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3",
+        "php": ">=5.4",
         "zendframework/zendframework": "dev-master",
         "superdweebie/common": "dev-master"        
     },
