@@ -14,13 +14,15 @@
     ],
     "require": {
         "php": ">=5.4",
-        "zendframework/zendframework": "dev-master",
-        "superdweebie/common": "dev-master"        
+        "zendframework/zendframework": "master@dev",
+        "superdweebie/common": "master@dev"
     },
-
+    "suggest": {
+        "superdweebie/doctrineExtensionsModule": "Sds\\DoctrineExtensionsModule to enable annotations in user model"
+    },
     "autoload": {
         "psr-0": {
-            "Sds\\UserModule": "src/"    
+            "Sds\\UserModule": "src/"
         }
     }
 }
