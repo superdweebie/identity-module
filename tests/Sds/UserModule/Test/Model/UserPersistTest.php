@@ -3,7 +3,7 @@
 namespace Sds\UserModule\Test\Model;
 
 use Sds\UserModule\Model\User;
-use Sds\UserModule\Test\BaseTest;
+use Sds\ModuleUnitTester\BaseTest;
 
 class ControllerTest extends BaseTest{
 

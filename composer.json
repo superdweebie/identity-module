@@ -15,7 +15,8 @@
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "master@dev",
-        "superdweebie/common": "master@dev"
+        "superdweebie/common": "master@dev",
+        "superdweebie/module-unit-tester": "master@dev"
     },
     "suggest": {
         "superdweebie/doctrine-extensions-module": "Enables annotations in user model"
