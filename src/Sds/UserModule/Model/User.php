@@ -3,6 +3,7 @@
 namespace Sds\UserModule\Model;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Sds\Common\Auth\AuthInterface;
 use Sds\Common\User\RoleAwareUserInterface;
 use Sds\DoctrineExtensions\Auth\Behaviour\AuthTrait;
 use Sds\DoctrineExtensions\User\Behaviour\RoleAwareUserTrait;
@@ -11,7 +12,7 @@ use Sds\DoctrineExtensions\Serializer\Mapping\Annotation\DoNotSerialize as SDS_D
 
 
 /** @ODM\Document */
-class User implements RoleAwareUserInterface
+class User implements RoleAwareUserInterface, AuthInterface
 {
     use AuthTrait;
     use RoleAwareUserTrait;
