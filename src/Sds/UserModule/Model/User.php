@@ -2,13 +2,14 @@
 
 namespace Sds\UserModule\Model;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Sds\Common\Auth\AuthInterface;
 use Sds\Common\User\RoleAwareUserInterface;
 use Sds\DoctrineExtensions\Auth\Behaviour\AuthTrait;
 use Sds\DoctrineExtensions\User\Behaviour\RoleAwareUserTrait;
-use Sds\DoctrineExtensions\Readonly\Mapping\Annotation\Readonly as SDS_Readonly;
-use Sds\DoctrineExtensions\Serializer\Mapping\Annotation\DoNotSerialize as SDS_DoNotSerialize;
+
+//Annotation imports
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
 
 
 /** @ODM\Document */
