@@ -1,4 +1,6 @@
 Sds UserModule
 ==============
 
-User management module
+[![Build Status](https://secure.travis-ci.org/superdweebie/userModule.png)](http://travis-ci.org/superdweebie/userModule)
+
+Zf2 user management module
