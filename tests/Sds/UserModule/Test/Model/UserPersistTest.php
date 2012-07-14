@@ -3,9 +3,9 @@
 namespace Sds\UserModule\Test\Model;
 
 use Sds\UserModule\Model\User;
-use Sds\ModuleUnitTester\BaseTest;
+use Sds\ModuleUnitTester\AbstractTest;
 
-class ControllerTest extends BaseTest{
+class ControllerTest extends AbstractTest{
 
     public $controller;
     public $serviceMapArray;
