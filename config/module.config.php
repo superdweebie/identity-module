@@ -88,7 +88,7 @@ return array(
             ),
             'sds.user' => array(
                 'paths' => array(
-                    'vendor/superdweebie/userModule/src/Sds/UserModule/Model'
+                    'vendor/superdweebie/user-module/src/Sds/UserModule/Model'
                 ),
             ),
         ),
