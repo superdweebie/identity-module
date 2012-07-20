@@ -87,6 +87,7 @@ return array(
                 ),
             ),
             'sds.user' => array(
+                'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver',
                 'paths' => array(
                     'vendor/superdweebie/user-module/src/Sds/UserModule/Model'
                 ),
