@@ -8,6 +8,14 @@ return array(
             'extensionConfigs' => array(
                 'Sds\DoctrineExtensions\Readonly' => null,
                 'Sds\DoctrineExtensions\Serializer' => null,
+                'Sds\DoctrineExtensions\DojoModel' => array(
+                    'destPaths' => array(
+                        'all' => array(
+                            'filter' => 'Sds\UserModule',
+                            'path' => 'vendor/superdweebie/user-module/jsClient'
+                        ),
+                    ),
+                ),
             ),
         ),
         'accessControl' => array(
