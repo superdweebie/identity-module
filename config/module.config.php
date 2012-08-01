@@ -3,6 +3,7 @@ return array(
     'sds' => array(
         'user' => array(
             'enableAccessControl' => false,
+            'documentManager' => 'doctrine.documentmanager.odm_default',
         ),
         'doctrineExtensions' => array(
             'extensionConfigs' => array(
@@ -62,7 +63,7 @@ return array(
             'user' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/user',
+                    'route'    => '/user/',
                     'defaults' => array(
                         'controller' => 'user',
                     ),
@@ -71,7 +72,7 @@ return array(
             'userRest' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/user/rest',
+                    'route'    => '/user/rest/',
                     'defaults' => array(
                         'controller' => 'userRest',
                     ),
@@ -80,7 +81,7 @@ return array(
         ),
     ),
 
-    'controller' => array(
+    'controllers' => array(
         'factories' => array(
             'user' => 'Sds\UserModule\Service\UserControllerFactory',
             'userRest' => 'Sds\UserModule\Service\UserRestControllerFactory'

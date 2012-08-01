@@ -17,7 +17,8 @@
         "zendframework/zendframework": "dev-master",
         "superdweebie/common": "dev-master",
         "superdweebie/sijit": "dev-master",
-        "superdweebie/dojo-module": "dev-master"
+        "superdweebie/dojo-module": "dev-master",
+        "superdweebie/json-controller": "dev-master"
     },
     "suggest": {
         "superdweebie/doctrine-extensions-module": "Enables annotations in user model"

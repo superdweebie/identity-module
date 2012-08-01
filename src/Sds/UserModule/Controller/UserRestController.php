@@ -3,9 +3,10 @@
  * @package    Sds
  * @license    MIT
  */
-namespace Main\Controller;
+namespace Sds\UserModule\Controller;
 
-use Zend\Mvc\Controller\AbstractRestfulController;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Sds\JsonController\AbstractJsonRestfulController;
 
 /**
  *
@@ -14,7 +15,7 @@ use Zend\Mvc\Controller\AbstractRestfulController;
  * @since   0.1.0
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class UserRestController extends AbstractRestfulController {
+class UserRestController extends AbstractJsonRestfulController {
 
     protected $limit = 50;
 
@@ -29,6 +30,14 @@ class UserRestController extends AbstractRestfulController {
     protected $serializer;
 
     protected $validator;
+
+    public function getDocumentManager() {
+        return $this->documentManager;
+    }
+
+    public function setDocumentManager(DocumentManager $documentManager) {
+        $this->documentManager = $documentManager;
+    }
 
     /**
      * Return list of users.
