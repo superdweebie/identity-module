@@ -30,8 +30,12 @@ define
 
                 userApiMap: undefined,
 
+                // recoverPasswordForm: Sds.UserModule.RecoverPasswordFormInterface | sijit.ServiceManager.Ref
+                //     A recover password form, or reference to a recover password form.
                 recoverPasswordForm: undefined,
 
+                // registerForm: Sds.UserModule.RegisterFormInterface | sijit.ServiceManager.Ref
+                //     A register form, or reference to a register form.
                 registerForm: undefined,
 
                 _store: undefined,

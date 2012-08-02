@@ -13,7 +13,7 @@ define(
 //                        status: 'status',
 //                        errorService: 'errorController',
                         recoverPasswordForm: 'Sds/UserModule/RecoverPasswordFormDialog',
-                        registerForm: 'Sds/UserModule/RegisterDialog'
+                        registerForm: 'Sds/UserModule/RegisterFormDialog'
                     }
                 },
                 user: {
