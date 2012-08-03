@@ -5,9 +5,9 @@
  */
 namespace Sds\UserModule\Model;
 
-use Sds\Common\Auth\AuthInterface;
+use Sds\Common\User\AuthInterface;
 use Sds\Common\User\RoleAwareUserInterface;
-use Sds\DoctrineExtensions\Auth\Behaviour\AuthTrait;
+use Sds\DoctrineExtensions\User\Behaviour\AuthTrait;
 use Sds\DoctrineExtensions\User\Behaviour\RoleAwareUserTrait;
 
 //Annotation imports
