@@ -29,8 +29,6 @@ class User implements RoleAwareUserInterface, AuthInterface
     use AuthTrait;
     use RoleAwareUserTrait;
 
-    protected $objclass = 'User';
-
     /**
      * @ODM\Id(strategy="UUID")
      */
