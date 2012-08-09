@@ -14,13 +14,13 @@
     ],
     "require": {
         "php": ">=5.4",
-        "zendframework/zendframework": "dev-master",
         "superdweebie/common": "dev-master",
-        "superdweebie/sijit": "dev-master",
-        "superdweebie/dojo-module": "dev-master",
-        "superdweebie/json-controller": "dev-master"
+        "superdweebie/json-controller": "dev-master",
+        "superdweebie/module-unit-tester": "dev-master",
+        "zendframework/zendframework": "dev-master"
     },
     "suggest": {
+        "superdweebie/user-module-js-client": "A dojo based js client to consume the services of userModule",
         "superdweebie/doctrine-extensions-module": "Enables annotations in user model"
     },
     "autoload": {
