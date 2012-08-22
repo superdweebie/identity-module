@@ -44,11 +44,6 @@ class User implements RoleAwareUserInterface, AuthInterface
      */
     protected $lastname;
 
-    /**
-     * @ODM\Field(type="string")
-     */
-    protected $nickname;
-
     public function getId() {
         return $this->id;
     }
@@ -67,13 +62,5 @@ class User implements RoleAwareUserInterface, AuthInterface
 
     public function setLastname($lastname) {
         $this->lastname = $lastname;
-    }
-
-    public function getNickname() {
-        return $this->nickname;
-    }
-
-    public function setNickname($nickname) {
-        $this->nickname = $nickname;
     }
 }
