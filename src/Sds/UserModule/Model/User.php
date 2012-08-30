@@ -23,6 +23,12 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\SerializeClassName
+ * @Sds\ClassDojo(
+ *     className = true,
+ *     inheritFrom = {
+ *         "Sds/InputAgent/BaseInputAgentModel"
+ *     }
+ * )
  */
 class User implements RoleAwareUserInterface, AuthInterface
 {
@@ -31,16 +37,29 @@ class User implements RoleAwareUserInterface, AuthInterface
 
     /**
      * @ODM\Id(strategy="UUID")
+     * @Sds\PropertyDojo(
+     *     inputType = "hidden"
+     * )
      */
     protected $id;
 
     /**
-     * @ODM\Field(type="string")
+     * @ODM\String
+     * @Sds\Required
+     * @Sds\PropertyDojo(
+     *     required = true,
+     *     validators = {@Sds\DojoValidator(module = "Sds/Validator/PersonalNameValidator")}
+     * )
      */
     protected $firstname;
 
     /**
      * @ODM\Field(type="string")
+     * @Sds\Required
+     * @Sds\PropertyDojo(
+     *     required = true,
+     *     validators = {@Sds\DojoValidator(module = "Sds/Validator/PersonalNameValidator")}
+     * )
      */
     protected $lastname;
 
