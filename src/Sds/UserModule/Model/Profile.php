@@ -23,6 +23,9 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\EmbeddedDocument
  * @Sds\SerializeClassName
+ * @Sds\ClassDojo(
+ *     className = true
+ * )
  */
 class Profile
 {
@@ -31,6 +34,13 @@ class Profile
      * @Sds\CryptHash
      * (
      *     saltClass = ""
+     * )
+     * @Sds\PropertyValidators({
+     *     @Sds\Validator(class = "Sds\Common\Validator\EmailAddressValidator")
+     * })
+     * @Sds\PropertyDojo(
+     *     required = true,
+     *     validators = {@Sds\DojoValidator(module = "Sds/Validator/EmailAddressValidator")}
      * )
      */
     protected $email;

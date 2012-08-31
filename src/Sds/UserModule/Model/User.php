@@ -24,10 +24,7 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @ODM\Document
  * @Sds\SerializeClassName
  * @Sds\ClassDojo(
- *     className = true,
- *     inheritFrom = {
- *         "Sds/InputAgent/BaseInputAgentModel"
- *     }
+ *     className = true
  * )
  */
 class User implements RoleAwareUserInterface, AuthInterface
@@ -46,9 +43,14 @@ class User implements RoleAwareUserInterface, AuthInterface
     /**
      * @ODM\String
      * @Sds\Required
+     * @Sds\PropertyValidators({
+     *     @Sds\Validator(class = "Sds\Common\Validator\PersonalNameValidator")
+     * })
      * @Sds\PropertyDojo(
      *     required = true,
-     *     validators = {@Sds\DojoValidator(module = "Sds/Validator/PersonalNameValidator")}
+     *     validators = {
+     *         @Sds\DojoValidator(module = "Sds/Validator/PersonalNameValidator")
+     *     }
      * )
      */
     protected $firstname;
@@ -56,6 +58,9 @@ class User implements RoleAwareUserInterface, AuthInterface
     /**
      * @ODM\Field(type="string")
      * @Sds\Required
+     * @Sds\PropertyValidators({
+     *     @Sds\Validator(class = "Sds\Common\Validator\PersonalNameValidator")
+     * })
      * @Sds\PropertyDojo(
      *     required = true,
      *     validators = {@Sds\DojoValidator(module = "Sds/Validator/PersonalNameValidator")}
