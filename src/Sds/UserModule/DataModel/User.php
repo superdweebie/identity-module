@@ -3,7 +3,7 @@
  * @package    Sds
  * @license    MIT
  */
-namespace Sds\UserModule\Model;
+namespace Sds\UserModule\DataModel;
 
 use Sds\Common\User\AuthInterface;
 use Sds\Common\User\RoleAwareUserInterface;
@@ -22,10 +22,8 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @author  Tim Roediger <superdweebie@gmail.com>
  *
  * @ODM\Document
- * @Sds\SerializeClassName
- * @Sds\ClassDojo(
- *     className = true
- * )
+ * @Sds\Serializer(@Sds\ClassName)
+ * @Sds\Dojo(@Sds\ClassName)
  */
 class User implements RoleAwareUserInterface, AuthInterface
 {
@@ -34,8 +32,10 @@ class User implements RoleAwareUserInterface, AuthInterface
 
     /**
      * @ODM\Id(strategy="UUID")
-     * @Sds\PropertyDojo(
-     *     inputType = "hidden"
+     * @Sds\Dojo(
+     *     @Sds\Metadata({
+     *         "inputType" = "hidden"
+     *     })
      * )
      */
     protected $id;
@@ -43,14 +43,14 @@ class User implements RoleAwareUserInterface, AuthInterface
     /**
      * @ODM\String
      * @Sds\Required
-     * @Sds\PropertyValidators({
+     * @Sds\ValidatorGroup(
      *     @Sds\Validator(class = "Sds\Common\Validator\PersonalNameValidator")
-     * })
-     * @Sds\PropertyDojo(
-     *     required = true,
-     *     validators = {
-     *         @Sds\DojoValidator(module = "Sds/Validator/PersonalNameValidator")
-     *     }
+     * )
+     * @Sds\Dojo(
+     *     @Sds\ValidatorGroup(
+     *         @Sds\Required,
+     *         @Sds\Validator(class = "Sds/Common/Validator/PersonalNameValidator")
+     *     )
      * )
      */
     protected $firstname;
@@ -58,12 +58,14 @@ class User implements RoleAwareUserInterface, AuthInterface
     /**
      * @ODM\Field(type="string")
      * @Sds\Required
-     * @Sds\PropertyValidators({
+     * @Sds\ValidatorGroup(
      *     @Sds\Validator(class = "Sds\Common\Validator\PersonalNameValidator")
-     * })
-     * @Sds\PropertyDojo(
-     *     required = true,
-     *     validators = {@Sds\DojoValidator(module = "Sds/Validator/PersonalNameValidator")}
+     * )
+     * @Sds\Dojo(
+     *     @Sds\ValidatorGroup(
+     *         @Sds\Required,
+     *         @Sds\Validator(class = "Sds/Common/Validator/PersonalNameValidator")
+     *     )
      * )
      */
     protected $lastname;

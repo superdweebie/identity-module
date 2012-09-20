@@ -101,13 +101,13 @@ return array(
         'driver' => array(
             'odm_default' => array(
                 'drivers' => array(
-                    'Sds\UserModule\Model' => 'sds.user'
+                    'Sds\UserModule\DataModel' => 'sds.user'
                 ),
             ),
             'sds.user' => array(
                 'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver',
                 'paths' => array(
-                    'vendor/superdweebie/user-module/src/Sds/UserModule/Model'
+                    'vendor/superdweebie/user-module/src/Sds/UserModule/DataModel'
                 ),
             ),
         ),

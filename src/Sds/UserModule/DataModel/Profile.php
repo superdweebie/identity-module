@@ -3,7 +3,7 @@
  * @package    Sds
  * @license    MIT
  */
-namespace Sds\UserModule\Model;
+namespace Sds\UserModule\DataModel;
 
 use Sds\Common\User\AuthInterface;
 use Sds\Common\User\RoleAwareUserInterface;
@@ -22,10 +22,8 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @author  Tim Roediger <superdweebie@gmail.com>
  *
  * @ODM\EmbeddedDocument
- * @Sds\SerializeClassName
- * @Sds\ClassDojo(
- *     className = true
- * )
+ * @Sds\Serializer(@Sds\ClassName)
+ * @Sds\Dojo(@Sds\ClassName)
  */
 class Profile
 {
@@ -35,12 +33,14 @@ class Profile
      * (
      *     saltClass = ""
      * )
-     * @Sds\PropertyValidators({
+     * @Sds\ValidatorGroup(
      *     @Sds\Validator(class = "Sds\Common\Validator\EmailAddressValidator")
-     * })
-     * @Sds\PropertyDojo(
-     *     required = true,
-     *     validators = {@Sds\DojoValidator(module = "Sds/Validator/EmailAddressValidator")}
+     * )
+     * @Sds\Dojo(
+     *     @Sds\ValidatorGroup(
+     *         @Sds\Required,
+     *         @Sds\Validator(class = "Sds/Common/Validator/EmailAddressValidator")
+     *     )
      * )
      */
     protected $email;
