@@ -16,6 +16,16 @@ use Sds\JsonController\AbstractJsonRpcController;
 class UserController extends AbstractJsonRpcController
 {
 
+    protected $serializer;
+
+    protected $validator;
+
+    protected $documentManager;
+
+    public function setSerializer(SerializerInterface $serializer) {
+        $this->serializer = $serializer;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -35,6 +45,15 @@ class UserController extends AbstractJsonRpcController
     public function recoverPassword($username, $email)
     {
 
+        $this->documentManager->getRepository('Sds\UserModule\DataModel\User');
+
+        if ( ! $username == ''){
+
+        }
+
+        if ( ! $email != ''){
+
+        }
     }
 
     /**
@@ -42,8 +61,17 @@ class UserController extends AbstractJsonRpcController
      * @param object $newUser
      * @return object
      */
-    public function register($newUser)
+    public function register($data)
     {
+        $newUser = $this->serializer->fromArray($data);
+        if ( ! $this->validator->isValid($newUser)){
+
+        }
+
+        $this->documentManager->persist($newUser);
+        $this->documentManager->flush();
+
+        return $this->serializer->toArray($newUser);
     }
 }
 

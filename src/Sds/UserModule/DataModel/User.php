@@ -70,6 +70,13 @@ class User implements RoleAwareUserInterface, AuthInterface
      */
     protected $lastname;
 
+    /**
+     * @ODM\EmbedOne(
+     *     targetDocument="Sds\UserModule\DataModels\Profile"
+     * )
+     */
+    protected $profile;
+
     public function getId() {
         return $this->id;
     }
@@ -88,5 +95,13 @@ class User implements RoleAwareUserInterface, AuthInterface
 
     public function setLastname($lastname) {
         $this->lastname = $lastname;
+    }
+
+    public function getProfile() {
+        return $this->profile;
+    }
+
+    public function setProfile(Profile $profile) {
+        $this->profile = $profile;
     }
 }
