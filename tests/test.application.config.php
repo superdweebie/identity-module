@@ -4,6 +4,7 @@ return array(
         'Sds\UserModule',
         'DoctrineModule',
         'DoctrineMongoODMModule',
+        'Sds\DoctrineExtensionsModule',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

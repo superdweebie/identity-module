@@ -5,7 +5,13 @@
  */
 namespace Sds\UserModule\Controller;
 
+use Sds\Common\Serializer\SerializerInterface;
+use Sds\DoctrineExtensions\Validator\DocumentValidatorInterface;
 use Sds\JsonController\AbstractJsonRpcController;
+use Sds\UserModule\Exception\InvalidArgumentException;
+use Sds\UserModule\Exception\UserNotFoundException;
+use Zend\Mail\Message;
+use Zend\Mail\Transport\TransportInterface;
 
 /**
  *
@@ -22,8 +28,48 @@ class UserController extends AbstractJsonRpcController
 
     protected $documentManager;
 
+    protected $userClass;
+
+    protected $mailTransport;
+
     public function setSerializer(SerializerInterface $serializer) {
         $this->serializer = $serializer;
+    }
+
+    public function getSerializer() {
+        return $this->serializer;
+    }
+
+    public function getValidator() {
+        return $this->validator;
+    }
+
+    public function setValidator(DocumentValidatorInterface $validator) {
+        $this->validator = $validator;
+    }
+
+    public function getDocumentManager() {
+        return $this->documentManager;
+    }
+
+    public function setDocumentManager($documentManager) {
+        $this->documentManager = $documentManager;
+    }
+
+    public function getUserClass() {
+        return $this->userClass;
+    }
+
+    public function setUserClass($userClass) {
+        $this->userClass = $userClass;
+    }
+
+    public function getMailTransport() {
+        return $this->mailTransport;
+    }
+
+    public function setMailTransport(TransportInterface $mailTransport) {
+        $this->mailTransport = $mailTransport;
     }
 
     /**
@@ -32,7 +78,8 @@ class UserController extends AbstractJsonRpcController
     public function registerRpcMethods(){
         return array(
             'recoverPassword',
-            'register'
+            'register',
+            'usernameAvailable'
         );
     }
 
@@ -40,38 +87,78 @@ class UserController extends AbstractJsonRpcController
      *
      * @param string $username
      * @param string $email
-     * @return object
+     * @throws InvalidArgumentException
+     * @throws UserNotFoundException
+     * @return boolean
      */
     public function recoverPassword($username, $email)
     {
 
-        $this->documentManager->getRepository('Sds\UserModule\DataModel\User');
+        $criteria = [];
 
         if ( ! $username == ''){
-
+            $criteria['username'] = $username;
         }
 
         if ( ! $email != ''){
-
+            $criteria['email'] = $email;
         }
+
+        if (count($criteria) == 0){
+            throw new InvalidArgumentException('Either username or email must be provided');
+        }
+
+        $repository = $this->documentManager->getRepository($this->userClass);
+        $results = $repository->findBy($critiera);
+        if (count($results) != 1){
+            throw new UserNotFoundException();
+        }
+
+        $user = $results[0];
+
+        $mail = new Message();
+        $mail->setBody('Recover password request')
+            ->setFrom('usermodule@sds.com')
+            ->addTo($user->getProfile()->getEmail())
+            ->setSubject('Password Recovery');
+
+        $this->transport->send($mail);
+
+        return true;
     }
 
     /**
      *
-     * @param object $newUser
+     * @param object $data
      * @return object
+     * @throws InvalidArgumentException
      */
     public function register($data)
     {
         $newUser = $this->serializer->fromArray($data);
-        if ( ! $this->validator->isValid($newUser)){
-
+        if ( ! $this->validator->isValid($newUser, $this->documentManager->getClassMetadata($this->userClass))){
+            throw new InvalidArgumentException($this->validator->getMessages());
         }
 
         $this->documentManager->persist($newUser);
         $this->documentManager->flush();
 
         return $this->serializer->toArray($newUser);
+    }
+
+    /**
+     *
+     * @param object $username
+     * @return boolean
+     */
+    public function usernameAvailable($username){
+
+        $repository = $this->documentManager->getRepository($this->userClass);
+        $results = $repository->findBy(['username' => $username]);
+        if (count($results) > 0){
+            return false;
+        }
+        return true;
     }
 }
 

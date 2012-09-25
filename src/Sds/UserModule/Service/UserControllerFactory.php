@@ -28,6 +28,21 @@ class UserControllerFactory implements FactoryInterface
 
         $controller = new UserController;
 
+        $config = $serviceLocator->get('Config')['sds']['user'];
+
+        $documentManager = $config['documentManager'];
+        if (is_string($documentManager)) {
+            $documentManager = $serviceLocator->get($documentManager);
+        }
+        $controller->setDocumentManager($documentManager);
+
+        $serializer = $config['serializer'];
+        if (is_string($serializer)) {
+            $serializer = $serviceLocator->get($serializer);
+        }
+        $controller->setSerializer($serializer);
+
+        $controller->setUserClass($config['userClass']);
 
         return $controller;
     }

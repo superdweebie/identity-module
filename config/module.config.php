@@ -4,6 +4,8 @@ return array(
         'user' => array(
             'enableAccessControl' => false,
             'documentManager' => 'doctrine.documentmanager.odm_default',
+            'serializer' => 'sds.doctrineExtensions.serializer',
+            'userClass' => 'Sds\UserModule\DataModel\User',
         ),
         'doctrineExtensions' => array(
             'extensionConfigs' => array(
@@ -69,19 +71,19 @@ return array(
 
     'router' => array(
         'routes' => array(
-            'user' => array(
+            'sds.user' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/user/',
+                    'route'    => '/user',
                     'defaults' => array(
                         'controller' => 'sds.user',
                     ),
                 ),
             ),
-            'userRest' => array(
+            'sds.userRest' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/user/rest/',
+                    'route'    => '/user/rest',
                     'defaults' => array(
                         'controller' => 'sds.userRest',
                     ),

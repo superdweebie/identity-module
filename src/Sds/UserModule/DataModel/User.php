@@ -72,7 +72,7 @@ class User implements RoleAwareUserInterface, AuthInterface
 
     /**
      * @ODM\EmbedOne(
-     *     targetDocument="Sds\UserModule\DataModels\Profile"
+     *     targetDocument="Sds\UserModule\DataModel\Profile"
      * )
      */
     protected $profile;
