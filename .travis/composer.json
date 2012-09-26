@@ -1,0 +1,5 @@
+{
+    "require": {
+        "superdweebie/user-module"       : "dev-master"
+    }
+}

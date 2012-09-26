@@ -14,13 +14,16 @@ before_script:
   - cd ZendSkeletonApplication
   - rm .gitmodules
   - git rm --cached vendor/ZF2
-  - cp ../userModule/tests/composer.json ./
+  - cp ../userModule/.travis/composer.json ./
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install
   - rm -rf vendor/superdweebie/user-module
   - cp -r ../userModule vendor/superdweebie/
   - mv vendor/superdweebie/userModule vendor/superdweebie/user-module
+  - rm config/application.config.php
 
 script:
   - cd vendor/superdweebie/user-module
   - phpunit
+
+language: php

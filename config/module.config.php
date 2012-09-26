@@ -12,7 +12,7 @@ return array(
             'extensionConfigs' => array(
                 'Sds\DoctrineExtensions\Readonly' => null,
                 'Sds\DoctrineExtensions\Serializer' => null,
-                'Sds\DoctrineExtensions\Validator' => new Sds\DoctrineExtensions\Validator\ExtensionConfig(['validateOnFlush' => false]),
+                'Sds\DoctrineExtensions\Validator' => ['validateOnFlush' => false],
                 'Sds\DoctrineExtensions\Crypt' => null,
                 'Sds\DoctrineExtensions\DojoModel' => array(
                     'destPaths' => array(
