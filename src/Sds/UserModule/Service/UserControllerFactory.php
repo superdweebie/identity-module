@@ -42,6 +42,12 @@ class UserControllerFactory implements FactoryInterface
         }
         $controller->setSerializer($serializer);
 
+        $validator = $config['validator'];
+        if (is_string($validator)) {
+            $validator = $serviceLocator->get($validator);
+        }
+        $controller->setValidator($validator);
+
         $controller->setUserClass($config['userClass']);
 
         return $controller;

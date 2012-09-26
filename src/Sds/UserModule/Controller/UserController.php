@@ -137,7 +137,7 @@ class UserController extends AbstractJsonRpcController
     {
         $newUser = $this->serializer->fromArray($data);
         if ( ! $this->validator->isValid($newUser, $this->documentManager->getClassMetadata($this->userClass))){
-            throw new InvalidArgumentException($this->validator->getMessages());
+            throw new InvalidArgumentException(implode(', ', $this->validator->getMessages()));
         }
 
         $this->documentManager->persist($newUser);

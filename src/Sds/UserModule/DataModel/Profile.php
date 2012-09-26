@@ -29,11 +29,11 @@ class Profile
 {
     /**
      * @ODM\Field(type="string")
-     * @Sds\CryptHash
-     * (
-     *     saltClass = ""
+     * @Sds\CryptBlockCipher(
+     *     keyClass = "Sds\UserModule\Crypt\EmailKey"
      * )
      * @Sds\ValidatorGroup(
+     *     @Sds\Required,
      *     @Sds\Validator(class = "Sds\Common\Validator\EmailAddressValidator")
      * )
      * @Sds\Dojo(
