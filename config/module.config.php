@@ -7,6 +7,10 @@ return array(
             'serializer' => 'sds.doctrineExtensions.serializer',
             'validator' => 'sds.doctrineExtensions.validator',
             'userClass' => 'Sds\UserModule\DataModel\User',
+            'mailTransport' => 'sds.mailTransport.smtp',
+            'mailFrom' => 'sds@usermodule.dummy',
+            'recoverPasswordLink' => 'http://localhost?username=[username]&recoverPassword=[code]',
+            'recoverPasswordExpiry' => 4,
         ),
         'doctrineExtensions' => array(
             'extensionConfigs' => array(
@@ -117,4 +121,23 @@ return array(
             ),
         ),
     ),
+
+    'service_manager' => array(
+        'factories' => array(
+            'sds.mailTransport.stmp' => function(){
+                return new \Zend\Mail\Transport\Smtp([
+                    //Add your mail settings here
+                ]);
+            },
+        ),
+    ),
+
+    'view_manager' => array(
+        'template_map'             => array(
+            'email/recoverPassword' => __DIR__ . '/../view/email/recoverPassword.phtml',
+        ),
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
+        )
+    )
 );

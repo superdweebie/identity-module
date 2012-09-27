@@ -19,15 +19,19 @@ class UserControllerTest extends AbstractControllerTest{
         parent::setUp();
 
         $this->documentManager = $this->serviceManager->get('doctrine.documentmanager.odm_default');
+
+        //clear any residual test data first
+        $this->collection = $this->documentManager->getDocumentCollection($this->controller->getUserClass());
+        $this->collection->remove(array('username' => 'toby'));
+    }
+
+    public function tearDown(){
+        $this->collection->remove(array('username' => 'toby'));
     }
 
     public function testUsernameAvailable(){
 
         $documentManager = $this->documentManager;
-
-        //clear data first
-        $collection = $documentManager->getDocumentCollection($this->controller->getUserClass());
-        $collection->remove(array('username' => 'toby'));
 
         $this->request->setMethod(Request::METHOD_POST);
         $this->request->setContent('{"method": "usernameAvailable", "params": ["toby"], "id": 1}');
@@ -37,7 +41,7 @@ class UserControllerTest extends AbstractControllerTest{
         $this->assertEquals(1, $returnArray['id']);
         $this->assertEquals(true, $returnArray['result']);
 
-        //create the user
+        //create the moock user
         $user = new User;
         $user->setUsername('toby');
         $documentManager->persist($user);
@@ -49,19 +53,13 @@ class UserControllerTest extends AbstractControllerTest{
         $returnArray = $result->getVariables();
 
         $this->assertEquals(1, $returnArray['id']);
-        $this->assertEquals(false, $returnArray['result']);
-
-        $collection->remove(array('username' => 'toby'));
+        $this->assertFalse($returnArray['result']);
     }
 
     public function testRegister(){
 
         $documentManager = $this->documentManager;
 
-        //clear data first
-        $collection = $documentManager->getDocumentCollection($this->controller->getUserClass());
-        $collection->remove(array('username' => 'toby'));
-
         //use controller
         $this->request->setMethod(Request::METHOD_POST);
         $this->request->setContent('{
@@ -71,10 +69,7 @@ class UserControllerTest extends AbstractControllerTest{
                     "_className":"Sds\\\\UserModule\\\\DataModel\\\\User",
                     "firstname":"Toby",
                     "lastname":"Awesome",
-                    "profile":{
-                        "_className":"Sds\\\\UserModule\\\\DataModel\\\\Profile",
-                        "email":"toby@awesome.com"
-                    },
+                    "email":"toby@awesome.com",
                     "password":"password1",
                     "username":"toby"
                 }
@@ -94,20 +89,12 @@ class UserControllerTest extends AbstractControllerTest{
 
         $this->assertTrue(isset($user));
         $this->assertEquals('Awesome', $user->getLastname());
-
-        //cleanup
-        $documentManager->remove($user);
-        $documentManager->flush();
+        $this->assertNotEquals('password1', $user->getPassword());
+        $this->assertNotEquals('toby@awesome.com', $user->getEmail());
     }
 
     public function testInvalidRegister(){
 
-        $documentManager = $this->documentManager;
-
-        //clear data first
-        $collection = $documentManager->getDocumentCollection($this->controller->getUserClass());
-        $collection->remove(array('username' => 'toby'));
-
         //use controller
         $this->request->setMethod(Request::METHOD_POST);
         $this->request->setContent('{
@@ -117,11 +104,7 @@ class UserControllerTest extends AbstractControllerTest{
                     "_className":"Sds\\\\UserModule\\\\DataModel\\\\User",
                     "firstname":"Toby",
                     "lastname":"Awesome",
-                    "profile":{
-                        "_className":"Sds\\\\UserModule\\\\DataModel\\\\Profile",
-                        "email":"toby@awesome.com"
-                    },
-                    "password":"password1",
+                    "email":"toby@awesome.com",
                     "username":"toby"
                 }
             ],
@@ -131,19 +114,42 @@ class UserControllerTest extends AbstractControllerTest{
         $returnArray = $result->getVariables();
 
         $this->assertEquals(1, $returnArray['id']);
-        $this->assertTrue(isset($returnArray['result']['id']));
+        $this->assertTrue(isset($returnArray['error']));
+        $this->assertEquals('Sds\UserModule\Exception\InvalidArgumentException', $returnArray['error']['type']);
+        $this->assertEquals('Field "password": This value is required.', $returnArray['error']['message']);
+    }
 
-        //load the user
+    public function testRecoverPasswordByUsername(){
+
+        $documentManager = $this->documentManager;
+
+        //create the mock user
+        $user = new User;
+        $user->setUsername('toby');
+        $user->setEmail('toby@awesome.com');
+        $user->setPassword('password1');
+        $documentManager->persist($user);
+        $documentManager->flush();
         $documentManager->clear();
-        $repository = $documentManager->getRepository($this->controller->getUserClass());
-        $user = $repository->findOneBy(['username' => 'toby']);
 
-        $this->assertTrue(isset($user));
-        $this->assertEquals('Awesome', $user->getLastname());
+        //use controller
+        $this->request->setMethod(Request::METHOD_POST);
+        $this->request->setContent('{
+            "method": "recoverPassword",
+            "params": ["toby"],
+            "id": 1
+        }');
+        $result = $this->controller->dispatch($this->request, $this->response);
+        $returnArray = $result->getVariables();
 
-        //cleanup
-        //$documentManager->remove($user);
-        //$documentManager->flush();
+        $this->assertTrue($returnArray['result']);
+
+        //check the email
+
+
+        //complete the password recovery
+
+        
     }
 }
 

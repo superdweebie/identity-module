@@ -27,29 +27,4 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  */
 class Profile
 {
-    /**
-     * @ODM\Field(type="string")
-     * @Sds\CryptBlockCipher(
-     *     keyClass = "Sds\UserModule\Crypt\EmailKey"
-     * )
-     * @Sds\ValidatorGroup(
-     *     @Sds\Required,
-     *     @Sds\Validator(class = "Sds\Common\Validator\EmailAddressValidator")
-     * )
-     * @Sds\Dojo(
-     *     @Sds\ValidatorGroup(
-     *         @Sds\Required,
-     *         @Sds\Validator(class = "Sds/Common/Validator/EmailAddressValidator")
-     *     )
-     * )
-     */
-    protected $email;
-
-    public function getEmail() {
-        return $this->email;
-    }
-
-    public function setEmail($email) {
-        $this->email = (string) $email;
-    }
 }

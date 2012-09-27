@@ -71,11 +71,54 @@ class User implements RoleAwareUserInterface, AuthInterface
     protected $lastname;
 
     /**
+     * @ODM\String
+     * @Sds\Serializer(@Sds\Ignore)
+     * @Sds\CryptBlockCipher(
+     *     keyClass = "Sds\UserModule\Crypt\EmailKey"
+     * )
+     * @Sds\ValidatorGroup(
+     *     @Sds\Required,
+     *     @Sds\Validator(class = "Sds\Common\Validator\EmailAddressValidator")
+     * )
+     * @Sds\Dojo(
+     *     @Sds\ValidatorGroup(
+     *         @Sds\Required,
+     *         @Sds\Validator(class = "Sds/Common/Validator/EmailAddressValidator")
+     *     )
+     * )
+     */
+    protected $email;
+
+    /**
      * @ODM\EmbedOne(
      *     targetDocument="Sds\UserModule\DataModel\Profile"
      * )
      */
     protected $profile;
+
+    /**
+     *
+     * @ODM\Timestamp
+     * @Sds\Serializer(@Sds\Ignore)
+     * @Sds\Dojo(@Sds\Ignore)
+     */
+    protected $passwordRecoveryTimestamp;
+
+    /**
+     *
+     * @ODM\String
+     * @Sds\Serializer(@Sds\Ignore)
+     * @Sds\Dojo(@Sds\Ignore)
+     */
+    protected $passwordRecoveryCode;
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function setEmail($email) {
+        $this->email = (string) $email;
+    }
 
     public function getId() {
         return $this->id;
@@ -103,5 +146,21 @@ class User implements RoleAwareUserInterface, AuthInterface
 
     public function setProfile(Profile $profile) {
         $this->profile = $profile;
+    }
+
+    public function getPasswordRecoveryTimestamp() {
+        return $this->passwordRecoveryTimestamp;
+    }
+
+    public function setPasswordRecoveryTimestamp($passwordRecoveryTimestamp) {
+        $this->passwordRecoveryTimestamp = $passwordRecoveryTimestamp;
+    }
+
+    public function getPasswordRecoveryCode() {
+        return $this->passwordRecoveryCode;
+    }
+
+    public function setPasswordRecoveryCode($passwordRecoveryCode) {
+        $this->passwordRecoveryCode = $passwordRecoveryCode;
     }
 }

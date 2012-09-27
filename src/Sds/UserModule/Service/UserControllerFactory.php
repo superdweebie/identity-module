@@ -30,25 +30,22 @@ class UserControllerFactory implements FactoryInterface
 
         $config = $serviceLocator->get('Config')['sds']['user'];
 
-        $documentManager = $config['documentManager'];
-        if (is_string($documentManager)) {
-            $documentManager = $serviceLocator->get($documentManager);
-        }
-        $controller->setDocumentManager($documentManager);
+        //set document manager
+        $controller->setDocumentManager($config['documentManager']);
 
-        $serializer = $config['serializer'];
-        if (is_string($serializer)) {
-            $serializer = $serviceLocator->get($serializer);
-        }
-        $controller->setSerializer($serializer);
+        //set serializer
+        $controller->setSerializer($config['serializer']);
 
-        $validator = $config['validator'];
-        if (is_string($validator)) {
-            $validator = $serviceLocator->get($validator);
-        }
-        $controller->setValidator($validator);
+        //set validator
+        $controller->setValidator($config['validator']);
+
+        //set mailTransport
+        $controller->setMailTransport($config['mailTransport']);
 
         $controller->setUserClass($config['userClass']);
+        $controller->setMailFrom($config['mailFrom']);
+        $controller->setRecoverPasswordLink($config['recoverPasswordLink']);
+        $controller->setRecoverPasswordExpiry($config['recoverPasswordExpiry']);
 
         return $controller;
     }
