@@ -16,8 +16,7 @@
         "php": ">=5.4",
         "superdweebie/common": "dev-master",
         "superdweebie/json-controller": "dev-master",
-        "superdweebie/module-unit-tester": "dev-master",
-        "zendframework/zendframework": "dev-master"
+        "superdweebie/module-unit-tester": "dev-master"
     },
     "suggest": {
         "superdweebie/dojo": "Composer based dojo install",
