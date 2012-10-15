@@ -102,7 +102,7 @@ class User implements RoleAwareUserInterface, AuthInterface
      * @Sds\Serializer(@Sds\Ignore)
      * @Sds\Dojo(@Sds\Ignore)
      */
-    protected $passwordRecoveryTimestamp;
+    protected $passwordRecoveryExpires;
 
     /**
      *
@@ -148,12 +148,12 @@ class User implements RoleAwareUserInterface, AuthInterface
         $this->profile = $profile;
     }
 
-    public function getPasswordRecoveryTimestamp() {
-        return $this->passwordRecoveryTimestamp;
+    public function getPasswordRecoveryExpires() {
+        return $this->passwordRecoveryExpires;
     }
 
-    public function setPasswordRecoveryTimestamp($passwordRecoveryTimestamp) {
-        $this->passwordRecoveryTimestamp = $passwordRecoveryTimestamp;
+    public function setPasswordRecoveryExpires($passwordRecoveryExpires) {
+        $this->passwordRecoveryExpires = $passwordRecoveryExpires;
     }
 
     public function getPasswordRecoveryCode() {

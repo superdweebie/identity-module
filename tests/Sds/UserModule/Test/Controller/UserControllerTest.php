@@ -145,11 +145,11 @@ class UserControllerTest extends AbstractControllerTest{
         $this->assertTrue($returnArray['result']);
 
         //check the email
-
+        $this->assertTrue(file_exists(__DIR__ . '/../../../email/test_mail.tmp'));
 
         //complete the password recovery
 
-        
+
     }
 }
 

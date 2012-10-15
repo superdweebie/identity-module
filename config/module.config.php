@@ -9,8 +9,8 @@ return array(
             'userClass' => 'Sds\UserModule\DataModel\User',
             'mailTransport' => 'sds.mailTransport.smtp',
             'mailFrom' => 'sds@usermodule.dummy',
-            'recoverPasswordLink' => 'http://localhost?username=[username]&recoverPassword=[code]',
-            'recoverPasswordExpiry' => 4,
+            'recoverPasswordLink' => 'http://localhost?username=[username]&recoverPasswordCode=[code]',
+            'recoverPasswordExpiry' => 4*60*60, //time in seconds
         ),
         'doctrineExtensions' => array(
             'extensionConfigs' => array(
