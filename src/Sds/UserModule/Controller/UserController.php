@@ -231,7 +231,7 @@ class UserController extends AbstractJsonRpcController
      * @return boolean
      * @throws UserNotFoundException
      * @throws InvalidArgumentException
-     */    
+     */
     public function recoverPasswordComplete($username, $newPassword, $passwordRecoveryCode)
     {
         $documentManager = $this->getDocumentManager();
@@ -241,7 +241,7 @@ class UserController extends AbstractJsonRpcController
             ->field('passwordRecoveryCode')->equals($passwordRecoveryCode)
             ->field('passwordRecoveryExpires')->gt(time())
             ->getQuery()
-            ->getSingleResult()
+            ->getSingleResult();
 
         if ( ! isset($user)){
             throw new UserNotFoundException();
@@ -250,7 +250,8 @@ class UserController extends AbstractJsonRpcController
         $user->setPassword($newPassword);
 
         // Check that the new password is valid before flushing
-        if ( ! $this->getValidator()->isValid($user, $documentManager->getClassMetadata($this->userClass))){
+        $validator = $this->getValidator();
+        if ( ! $validator->isValid($user, $documentManager->getClassMetadata($this->userClass))){
             throw new InvalidArgumentException(implode(', ', $validator->getMessages()));
         }
 

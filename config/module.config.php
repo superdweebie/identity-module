@@ -9,7 +9,7 @@ return array(
             'userClass' => 'Sds\UserModule\DataModel\User',
             'mailTransport' => 'sds.mailTransport.smtp',
             'mailFrom' => 'sds@usermodule.dummy',
-            'recoverPasswordLink' => 'http://localhost?username=[username]&recoverPasswordCode=[code]',
+            'recoverPasswordLink' => 'http://localhost/recoverPassword?username=[username]&recoverPasswordCode=[code]',
             'recoverPasswordExpiry' => 4*60*60, //time in seconds
         ),
         'doctrineExtensions' => array(
@@ -87,6 +87,16 @@ return array(
                     ),
                 ),
             ),
+            'sds.user.recoverPassword' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/recoverPassword',
+                    'defaults' => array(
+                        'controller' => 'sds.user.recoverPassword',
+                        'action' => 'recoverPassword'
+                    ),
+                ),
+            ),
             'sds.userRest' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -100,6 +110,9 @@ return array(
     ),
 
     'controllers' => array(
+        'invokables' => array(
+            'sds.user.recoverPassword' => 'Sds\UserModule\Controller\RecoverPasswordController'
+        ),
         'factories' => array(
             'sds.user' => 'Sds\UserModule\Service\UserControllerFactory',
             'sds.userRest' => 'Sds\UserModule\Service\UserRestControllerFactory'
@@ -135,6 +148,7 @@ return array(
     'view_manager' => array(
         'template_map'             => array(
             'email/recoverPassword' => __DIR__ . '/../view/email/recoverPassword.phtml',
+            'usermodule/recoverpassword/recoverpassword' => __DIR__ . '/../view/usermodule/recoverpassword/recoverPassword.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
