@@ -5,10 +5,12 @@
  */
 namespace Sds\UserModule\DataModel;
 
-use Sds\Common\User\AuthInterface;
-use Sds\Common\User\RoleAwareUserInterface;
-use Sds\DoctrineExtensions\User\Behaviour\AuthTrait;
-use Sds\DoctrineExtensions\User\Behaviour\RoleAwareUserTrait;
+use Sds\Common\Identity\CredentialInterface;
+use Sds\Common\Identity\IdentityInterface;
+use Sds\Common\Identity\RoleAwareIdentityInterface;
+use Sds\DoctrineExtensions\Identity\DataModel\CredentialTrait;
+use Sds\DoctrineExtensions\Identity\DataModel\IdentityTrait;
+use Sds\DoctrineExtensions\Identity\DataModel\RoleAwareIdentityTrait;
 
 //Annotation imports
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -25,10 +27,11 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @Sds\Serializer(@Sds\ClassName)
  * @Sds\Dojo(@Sds\ClassName)
  */
-class User implements RoleAwareUserInterface, AuthInterface
+class User implements CredentialInterface, IdentityInterface, RoleAwareIdentityInterface
 {
-    use AuthTrait;
-    use RoleAwareUserTrait;
+    use CredentialTrait;
+    use IdentityTrait;
+    use RoleAwareIdentityTrait;
 
     /**
      * @ODM\Id(strategy="UUID")
@@ -42,8 +45,8 @@ class User implements RoleAwareUserInterface, AuthInterface
 
     /**
      * @ODM\String
-     * @Sds\Required
      * @Sds\ValidatorGroup(
+     *     @Sds\Required,
      *     @Sds\Validator(class = "Sds\Common\Validator\PersonalNameValidator")
      * )
      * @Sds\Dojo(
@@ -57,8 +60,8 @@ class User implements RoleAwareUserInterface, AuthInterface
 
     /**
      * @ODM\Field(type="string")
-     * @Sds\Required
      * @Sds\ValidatorGroup(
+     *     @Sds\Required,
      *     @Sds\Validator(class = "Sds\Common\Validator\PersonalNameValidator")
      * )
      * @Sds\Dojo(
@@ -108,7 +111,6 @@ class User implements RoleAwareUserInterface, AuthInterface
      *
      * @ODM\String
      * @Sds\Serializer(@Sds\Ignore)
-     * @Sds\Dojo(@Sds\Ignore)
      */
     protected $passwordRecoveryCode;
 

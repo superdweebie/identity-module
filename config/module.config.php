@@ -9,7 +9,7 @@ return array(
             'userClass' => 'Sds\UserModule\DataModel\User',
             'mailTransport' => 'sds.mailTransport.smtp',
             'mailFrom' => 'sds@usermodule.dummy',
-            'recoverPasswordLink' => 'http://localhost/recoverPassword?username=[username]&recoverPasswordCode=[code]',
+            'recoverPasswordLink' => 'http://localhost/recoverPassword?name=[name]&passwordRecoveryCode=[code]',
             'recoverPasswordExpiry' => 4*60*60, //time in seconds
         ),
         'doctrineExtensions' => array(
@@ -147,8 +147,8 @@ return array(
 
     'view_manager' => array(
         'template_map'             => array(
-            'email/recoverPassword' => __DIR__ . '/../view/email/recoverPassword.phtml',
-            'usermodule/recoverpassword/recoverpassword' => __DIR__ . '/../view/usermodule/recoverpassword/recoverPassword.phtml',
+            'email/recover-password' => __DIR__ . '/../view/email/recover-password.phtml',
+            'sds/recover-password/recover-password' => __DIR__ . '/../view/sds/recover-password/recover-password.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

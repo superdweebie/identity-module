@@ -6,7 +6,6 @@
 namespace Sds\UserModule\Controller;
 
 use Sds\Common\Crypt\Hash;
-use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
 use Sds\DoctrineExtensions\Crypt\BlockCipherService;
 use Sds\JsonController\AbstractJsonRpcController;
 use Sds\UserModule\Exception\InvalidArgumentException;
@@ -147,22 +146,22 @@ class UserController extends AbstractJsonRpcController
      */
     public function registerRpcMethods(){
         return array(
-            'recoverPassword',
-            'recoverPasswordComplete',
+            'recoverPasswordPart1',
+            'recoverPasswordPart2',
             'register',
-            'usernameAvailable'
+            'identityNameAvailable'
         );
     }
 
     /**
      *
-     * @param string $username
+     * @param string $identityName
      * @param string $email
      * @throws InvalidArgumentException
      * @throws UserNotFoundException
      * @return boolean
      */
-    public function recoverPassword($username = null, $email = null)
+    public function recoverPasswordPart1($identityName = null, $email = null)
     {
 
         $documentManager = $this->getDocumentManager();
@@ -209,7 +208,7 @@ class UserController extends AbstractJsonRpcController
             'link' => $link,
             'hours' => $this->recoverPasswordExpiry
         ]);
-        $body->setTemplate('email/recoverPassword');
+        $body->setTemplate('email/recover-password');
 
         // Send the email
         $mail = new Message();
@@ -232,7 +231,7 @@ class UserController extends AbstractJsonRpcController
      * @throws UserNotFoundException
      * @throws InvalidArgumentException
      */
-    public function recoverPasswordComplete($username, $newPassword, $passwordRecoveryCode)
+    public function recoverPasswordPart2($username, $newPassword, $passwordRecoveryCode)
     {
         $documentManager = $this->getDocumentManager();
 

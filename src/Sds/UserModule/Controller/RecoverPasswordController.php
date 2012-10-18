@@ -6,7 +6,7 @@
 namespace Sds\UserModule\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-
+use Zend\View\Model\ViewModel;
 /**
  *
  * @since   1.0

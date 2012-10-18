@@ -1,16 +1,13 @@
 <?php
 return array(
     'sds' => array(
-        'doctrineExtensions' => array(
-            'activeUser' => 'testActiveUser',
-        ),
         'user' => array(
             'mailTransport' => 'sds.mailTransport.file'
         ),
     ),
     'service_manager' => array(
         'invokables' => array(
-            'testActiveUser' => 'Sds\DoctrineExtensionsModule\Test\TestAsset\ActiveUser'
+            'Zend\Authentication\AuthenticationService' => 'Sds\UserModule\Test\TestAsset\MockAuthenticationService',
         ),
         'factories' => array(
             'sds.mailTransport.file' => function(){
