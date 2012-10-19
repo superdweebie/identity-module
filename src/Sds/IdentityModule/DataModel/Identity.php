@@ -3,7 +3,7 @@
  * @package    Sds
  * @license    MIT
  */
-namespace Sds\UserModule\DataModel;
+namespace Sds\IdentityModule\DataModel;
 
 use Sds\Common\Identity\CredentialInterface;
 use Sds\Common\Identity\IdentityInterface;
@@ -27,7 +27,7 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @Sds\Serializer(@Sds\ClassName)
  * @Sds\Dojo(@Sds\ClassName)
  */
-class User implements CredentialInterface, IdentityInterface, RoleAwareIdentityInterface
+class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdentityInterface
 {
     use CredentialTrait;
     use IdentityTrait;
@@ -77,7 +77,7 @@ class User implements CredentialInterface, IdentityInterface, RoleAwareIdentityI
      * @ODM\String
      * @Sds\Serializer(@Sds\Ignore)
      * @Sds\CryptBlockCipher(
-     *     keyClass = "Sds\UserModule\Crypt\EmailKey"
+     *     keyClass = "Sds\IdentityModule\Crypt\EmailKey"
      * )
      * @Sds\ValidatorGroup(
      *     @Sds\Required,
@@ -94,7 +94,7 @@ class User implements CredentialInterface, IdentityInterface, RoleAwareIdentityI
 
     /**
      * @ODM\EmbedOne(
-     *     targetDocument="Sds\UserModule\DataModel\Profile"
+     *     targetDocument="Sds\IdentityModule\DataModel\Profile"
      * )
      */
     protected $profile;
@@ -105,14 +105,14 @@ class User implements CredentialInterface, IdentityInterface, RoleAwareIdentityI
      * @Sds\Serializer(@Sds\Ignore)
      * @Sds\Dojo(@Sds\Ignore)
      */
-    protected $passwordRecoveryExpires;
+    protected $forgotCredentialExpires;
 
     /**
      *
      * @ODM\String
      * @Sds\Serializer(@Sds\Ignore)
      */
-    protected $passwordRecoveryCode;
+    protected $forgotCredentialCode;
 
     public function getEmail() {
         return $this->email;
@@ -150,19 +150,19 @@ class User implements CredentialInterface, IdentityInterface, RoleAwareIdentityI
         $this->profile = $profile;
     }
 
-    public function getPasswordRecoveryExpires() {
-        return $this->passwordRecoveryExpires;
+    public function getForgotCredentialExpires() {
+        return $this->forgotCredentialExpires;
     }
 
-    public function setPasswordRecoveryExpires($passwordRecoveryExpires) {
-        $this->passwordRecoveryExpires = $passwordRecoveryExpires;
+    public function setForgotCredentialExpires($forgotCredentialExpires) {
+        $this->forgotCredentialExpires = $forgotCredentialExpires;
     }
 
-    public function getPasswordRecoveryCode() {
-        return $this->passwordRecoveryCode;
+    public function getForgotCredentialCode() {
+        return $this->forgotCredentialCode;
     }
 
-    public function setPasswordRecoveryCode($passwordRecoveryCode) {
-        $this->passwordRecoveryCode = $passwordRecoveryCode;
+    public function setForgotCredentialCode($forgotCredentialCode) {
+        $this->forgotCredentialCode = $forgotCredentialCode;
     }
 }

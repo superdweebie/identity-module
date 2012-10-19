@@ -1,7 +1,6 @@
 {
     "minimum-stability": "dev",
     "require": {
-        "superdweebie/user-module"       : "dev-master",
-        "zendframework/zendframework": "dev-master"
+        "superdweebie/identity-module"       : "dev-master"
     }
 }

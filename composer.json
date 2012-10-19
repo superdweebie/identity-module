@@ -1,11 +1,11 @@
 {
-    "name": "superdweebie/user-module",
+    "name": "superdweebie/identity-module",
     "description": "Zend Framework 2 Module that provides user management",
     "type": "library",
     "keywords": [
         "zf2"
     ],
-    "homepage": "http://github.com/superdweebie/userModule",
+    "homepage": "http://github.com/superdweebie/identityModule",
     "authors": [
         {
             "name": "Tim Roediger",
@@ -16,16 +16,17 @@
         "php": ">=5.4",
         "superdweebie/common": "dev-master",
         "superdweebie/json-controller": "dev-master",
-        "superdweebie/module-unit-tester": "dev-master"
+        "superdweebie/module-unit-tester": "dev-master",
+        "zendframework/zendframework": "dev-master"
     },
     "suggest": {
         "superdweebie/dojo": "Composer based dojo install",
-        "dojo/Sds": "Contains a dojo based js client to consume the services of userModule",
-        "superdweebie/doctrine-extensions-module": "Enables annotations in user model"
+        "dojo/Sds": "Contains a dojo based js client to consume the services of identityModule",
+        "superdweebie/doctrine-extensions-module": "Enables annotations in identity model"
     },
     "autoload": {
         "psr-0": {
-            "Sds\\UserModule": "src/"
+            "Sds\\IdentityModule": "src/"
         }
     }
 }

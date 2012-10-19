@@ -3,7 +3,7 @@
  * @package    Sds
  * @license    MIT
  */
-namespace Sds\UserModule\DataModel;
+namespace Sds\IdentityModule\DataModel;
 
 //Annotation imports
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;

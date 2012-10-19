@@ -3,7 +3,7 @@
  * @package    Sds
  * @license    MIT
  */
-namespace Sds\UserModule\Controller;
+namespace Sds\IdentityModule\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -13,9 +13,9 @@ use Zend\View\Model\ViewModel;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class RecoverPasswordController extends AbstractActionController
+class ForgotCredentialController extends AbstractActionController
 {
-    public function recoverPasswordAction(){
+    public function forgotCredentialAction(){
         return new ViewModel();
     }
 }

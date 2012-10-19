@@ -3,7 +3,7 @@
  * @package    Sds
  * @license    MIT
  */
-namespace Sds\UserModule\Controller;
+namespace Sds\IdentityModule\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Sds\JsonController\AbstractJsonRestfulController;
@@ -15,7 +15,7 @@ use Sds\JsonController\AbstractJsonRestfulController;
  * @since   0.1.0
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class UserRestController extends AbstractJsonRestfulController {
+class IdentityRestController extends AbstractJsonRestfulController {
 
     protected $limit = 50;
 
@@ -25,7 +25,7 @@ class UserRestController extends AbstractJsonRestfulController {
 
     protected $documentManager;
 
-    protected $documentClass = 'Sds\UserModule\Model\User';
+    protected $documentClass = 'Sds\IdentityModule\Model\Identity';
 
     protected $serializer;
 
@@ -40,7 +40,7 @@ class UserRestController extends AbstractJsonRestfulController {
     }
 
     /**
-     * Return list of users.
+     * Return list of identities
      *
      * @return array
      */

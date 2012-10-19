@@ -4,8 +4,7 @@
  * @package    Sds
  * @license    MIT
  */
-
-namespace Sds\UserModule\Exception;
+namespace Sds\IdentityModule\Exception;
 
 /**
  *
@@ -13,6 +12,6 @@ namespace Sds\UserModule\Exception;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class UserNotFoundException extends \Exception implements ExceptionInterface
+interface ExceptionInterface
 {
 }

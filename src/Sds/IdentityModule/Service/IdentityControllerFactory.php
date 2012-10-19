@@ -3,11 +3,11 @@
  * @package    Sds
  * @license    MIT
  */
-namespace Sds\UserModule\Service;
+namespace Sds\IdentityModule\Service;
 
+use Sds\IdentityModule\Controller\IdentityController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Sds\UserModule\Controller\UserRestController;
 
 /**
  *
@@ -15,22 +15,17 @@ use Sds\UserModule\Controller\UserRestController;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class UserRestControllerFactory implements FactoryInterface
+class IdentityControllerFactory implements FactoryInterface
 {
     /**
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
-     * @return \SdsUserModule\Controller\UserRestController
+     * @return \SdsAuthModule\Controller\AuthController
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $serviceLocator = $serviceLocator->getServiceLocator();
 
-        $config = $serviceLocator->get('Config')['sds']['user'];
-
-        $controller = new UserRestController;
-        $controller->setDocumentManager($serviceLocator->get($config['documentManager']));
-
-        return $controller;
+        return new IdentityController($serviceLocator->get('Config')['sds']['identity']['identityControllerOptions']);
     }
 }

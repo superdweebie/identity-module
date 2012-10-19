@@ -5,7 +5,7 @@
  * @license    MIT
  */
 
-namespace Sds\UserModule\Exception;
+namespace Sds\IdentityModule\Exception;
 
 /**
  *
@@ -13,6 +13,6 @@ namespace Sds\UserModule\Exception;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
+class IdentityNotFoundException extends \Exception implements ExceptionInterface
 {
 }
