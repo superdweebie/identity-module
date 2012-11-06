@@ -18,7 +18,6 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\EmbeddedDocument
  * @Sds\Serializer(@Sds\ClassName)
- * @Sds\Dojo(@Sds\ClassName)
  */
 class Profile
 {

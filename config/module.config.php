@@ -22,7 +22,7 @@ return array(
                 'Sds\DoctrineExtensions\Serializer' => null,
                 'Sds\DoctrineExtensions\Validator' => ['validateOnFlush' => false],
                 'Sds\DoctrineExtensions\Crypt' => null,
-                'Sds\DoctrineExtensions\DojoModel' => array(
+                'Sds\DoctrineExtensions\Dojo' => array(
                     'destPaths' => array(
                         'all' => array(
                             'filter' => 'Sds\IdentityModule',

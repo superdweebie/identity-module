@@ -25,7 +25,6 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer(@Sds\ClassName)
- * @Sds\Dojo(@Sds\ClassName)
  */
 class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdentityInterface
 {
@@ -35,60 +34,31 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
 
     /**
      * @ODM\Id(strategy="UUID")
-     * @Sds\Dojo(
-     *     @Sds\Metadata({
-     *         "inputType" = "hidden"
-     *     })
-     * )
      */
     protected $id;
 
     /**
      * @ODM\String
-     * @Sds\ValidatorGroup(
-     *     @Sds\Required,
-     *     @Sds\Validator(class = "Sds\Common\Validator\PersonalNameValidator")
-     * )
-     * @Sds\Dojo(
-     *     @Sds\ValidatorGroup(
-     *         @Sds\Required,
-     *         @Sds\Validator(class = "Sds/Common/Validator/PersonalNameValidator")
-     *     )
-     * )
+     * @Sds\RequiredValidator
+     * @Sds\PersonalNameValidator
      */
     protected $firstname;
 
     /**
      * @ODM\Field(type="string")
-     * @Sds\ValidatorGroup(
-     *     @Sds\Required,
-     *     @Sds\Validator(class = "Sds\Common\Validator\PersonalNameValidator")
-     * )
-     * @Sds\Dojo(
-     *     @Sds\ValidatorGroup(
-     *         @Sds\Required,
-     *         @Sds\Validator(class = "Sds/Common/Validator/PersonalNameValidator")
-     *     )
-     * )
+     * @Sds\RequiredValidator,
+     * @Sds\PersonalNameValidator
      */
     protected $lastname;
 
     /**
      * @ODM\String
-     * @Sds\Serializer(@Sds\Ignore)
+     * @Sds\Serializer(@Sds\Ignore("down"))
      * @Sds\CryptBlockCipher(
      *     keyClass = "Sds\IdentityModule\Crypt\EmailKey"
      * )
-     * @Sds\ValidatorGroup(
-     *     @Sds\Required,
-     *     @Sds\Validator(class = "Sds\Common\Validator\EmailAddressValidator")
-     * )
-     * @Sds\Dojo(
-     *     @Sds\ValidatorGroup(
-     *         @Sds\Required,
-     *         @Sds\Validator(class = "Sds/Common/Validator/EmailAddressValidator")
-     *     )
-     * )
+     * @Sds\RequiredValidator,
+     * @Sds\EmailAddressValidator
      */
     protected $email;
 
@@ -103,14 +73,13 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
      *
      * @ODM\Timestamp
      * @Sds\Serializer(@Sds\Ignore)
-     * @Sds\Dojo(@Sds\Ignore)
      */
     protected $forgotCredentialExpires;
 
     /**
      *
      * @ODM\String
-     * @Sds\Serializer(@Sds\Ignore)
+     * @Sds\Serializer(@Sds\Ignore("down"))
      */
     protected $forgotCredentialCode;
 
