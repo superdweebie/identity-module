@@ -106,7 +106,7 @@ return array(
                 'options' => array(
                     'route'    => '/identity/rest',
                     'defaults' => array(
-                        'controller' => 'sds.identityRest',
+                        'controller' => 'Sds/IdentityModule/Controller/IdentityRestController',
                     ),
                 ),
             ),
@@ -119,7 +119,7 @@ return array(
         ),
         'factories' => array(
             'sds.identity' => 'Sds\IdentityModule\Service\IdentityControllerFactory',
-            'sds.identityRest' => 'Sds\IdentityModule\Service\IdentityRestControllerFactory'
+            'Sds/IdentityModule/Controller/IdentityRestController' => 'Sds\IdentityModule\Service\IdentityRestControllerFactory'
         ),
     ),
 
