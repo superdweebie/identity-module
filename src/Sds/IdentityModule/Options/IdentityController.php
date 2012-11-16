@@ -40,6 +40,7 @@ class IdentityController extends AbstractOptions
 
     protected $forgotCredentialEmailSubject;
 
+    protected $limit;
 
     public function getServiceLocator() {
         return $this->serviceLocator;
@@ -155,5 +156,13 @@ class IdentityController extends AbstractOptions
 
     public function setForgotCredentialEmailSubject($forgotCredentialEmailSubject) {
         $this->forgotCredentialEmailSubject = (string) $forgotCredentialEmailSubject;
+    }
+
+    public function getLimit() {
+        return $this->limit;
+    }
+
+    public function setLimit($limit) {
+        $this->limit = (int) $limit;
     }
 }

@@ -7,7 +7,7 @@ namespace Sds\IdentityModule\Controller;
 
 use Sds\Common\Crypt\Hash;
 use Sds\DoctrineExtensions\Crypt\BlockCipherService;
-use Sds\JsonController\AbstractJsonRpcController;
+use Sds\JsonController\AbstractJsonRestfulController;
 use Sds\IdentityModule\Exception\InvalidArgumentException;
 use Sds\IdentityModule\Exception\IdentityNotFoundException;
 use Sds\IdentityModule\Options\IdentityController as IdentityControllerOptions;
@@ -21,7 +21,7 @@ use Zend\View\Model\ViewModel;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class IdentityController extends AbstractJsonRpcController
+class IdentityController extends AbstractJsonRestfulController
 {
 
     protected $options;
@@ -44,20 +44,89 @@ class IdentityController extends AbstractJsonRpcController
         $this->getOptions()->setServiceLocator($serviceLocator);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function registerRpcMethods(){
-        return array(
-            'forgotCredentialPart1',
-            'forgotCredentialPart2',
-            'register',
-            'identityNameAvailable'
+    public function __construct($options = null) {
+        $this->setOptions($options);
+    }
+
+    public function getList(){
+
+        $queryBuilder = $this->documentManager->createQueryBuilder();
+        $queryBuilder
+            ->find($this->options->getIdentityClass())
+            ->limit($this->getLimit())
+            ->skip($this->getOffset())
+            ->sort($this->getSort(), $this->getOrder())
+            ->hydrate(false)
+            ->eagerCursor(true);
+
+        $results = $queryBuilder->getQuery()->execute();
+
+        foreach ($results as $index => $result){
+            $results[$index] = $this->options->getSerializer()->applySerializeMetadataToArray($result, $this->options->getIdentityClass());
+        }
+
+        return $results;
+    }
+
+    public function get($identityName){
+
+        $queryBuilder = $this->getDocumentManager()->createQueryBuilder();
+        $queryBuilder
+            ->find($this->options->getIdentityClass())
+            ->field('identityName')->equals($identityName)
+            ->hydrate(false)
+            ->eagerCursor(true);
+
+        return $this->serializer->applySerializeMetadataToArray(
+            $queryBuilder->getQuery()->getSingleResult(),
+            $this->options->getIdentityClass()
         );
     }
 
-    public function __construct($options = null) {
-        $this->setOptions($options);
+    public function create($data){
+
+        $documentManager = $this->options->getDocumentManager();
+        $serializer = $this->options->getSerializer();
+
+        $identity = $serializer->fromArray($data);
+        $validatorResult = $this->options->getDocumentValidator()
+            ->isValid($identity, $documentManager->getClassMetadata($this->options->getIdentityClass()));
+
+        if ( ! $validatorResult->getResult()){
+            throw new InvalidArgumentException(implode(', ', $validatorResult->getMessages()));
+        }
+
+        $documentManager->persist($identity);
+        $documentManager->flush();
+
+        return $serializer->toArray($identity);
+    }
+
+    public function update($data){
+
+        $documentManager = $this->options->getDocumentManager();
+        $serializer = $this->options->getSerializer();
+
+        $identity = $serializer->fromArray($data, null, $this->options->getIdentityClass());
+
+        $validatorResult = $this->options->getDocumentValidator()
+            ->isValid($identity, $documentManager->getClassMetadata($this->options->getIdentityClass()));
+
+        if ($validatorResult->getResult()) {
+            $queryBuilder = $documentManager->createQueryBuilder();
+            $queryBuilder
+                ->update($this->options->getIdentityClass())
+                ->field('identityName')->equals($id);
+
+
+            $this->documentManager->persist($document);
+        } else {
+            throw new \Exception('Problem creating');
+        }
+    }
+
+    public function delete($identityName){
+    
     }
 
     /**
@@ -207,6 +276,59 @@ class IdentityController extends AbstractJsonRpcController
             return false;
         }
         return true;
+    }
+
+    protected function getLimit(){
+
+        $range = $this->getRequest()->getHeader('Range');
+
+        if (isset($range)) {
+            $range = explode('=', $range);
+            $range = explode('-', $range[1]);
+            if ((string)(int)$range[0] == $range[0] && (string)(int)$range[1] == $range[1])
+            {
+                $limit = $range[1] - $range[0] + 1;
+                if ($limit < $this->options->getLimit()) {
+                    return $limit;
+                }
+            }
+        }
+        return $this->options->getLimit();
+    }
+
+    protected function getOffset(){
+
+        $range = $this->getRequest()->getHeader('Range');
+
+        if(isset($range)){
+            $range = explode('=', $range);
+            $range = explode('-', $range[1]);
+            return  intval($range[0]);
+        } else {
+            return 0;
+        }
+    }
+
+    protected function getSort(){
+
+        foreach ($options as $key => $value)
+        {
+            if(substr($key, 0, 4) == 'sort')
+            {
+                $sortkey = $key;
+                $sort = substr($key, 6, strlen($key) - 7);
+                $order = substr($key, 5,1);
+            }
+        }
+        switch ($order)
+        {
+            case '_':
+                $order = 'ASC';
+                break;
+            case '-':
+                $order = 'DESC';
+        }
+        return array($sortkey, $sort, $order);
     }
 }
 

@@ -13,6 +13,7 @@ return array(
                 'forgotCredentialLink' => 'http://localhost/ZendSkeletonApplication/forgotCredential?name=[name]&forgotCredentialCode=[code]',
                 'forgotCredentialExpiry' => 4*60*60, //time in seconds
                 'forgotCredentialEmailSubject' => 'forgot password',
+                'limit' => 30 //max number of records returned from getList
             ],
             'emailCryptKey' => 'change this key phrase in your own app',
         ),

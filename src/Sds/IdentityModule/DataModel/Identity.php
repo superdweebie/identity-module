@@ -33,11 +33,6 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
     use RoleAwareIdentityTrait;
 
     /**
-     * @ODM\Id(strategy="UUID")
-     */
-    protected $id;
-
-    /**
      * @ODM\String
      * @Sds\RequiredValidator
      * @Sds\PersonalNameValidator
@@ -89,10 +84,6 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
 
     public function setEmail($email) {
         $this->email = (string) $email;
-    }
-
-    public function getId() {
-        return $this->id;
     }
 
     public function getFirstname() {
