@@ -1,21 +1,33 @@
 <?php
-return array(
-    'sds' => array(
-        'user' => array(
-            'mailTransport' => 'sds.mailTransport.file'
+return [
+    'sds' => [
+        'identity' => [
+            'forgotCredentialTokenControllerOptions' => [
+                'mailTransport' => 'Sds\IdentityModule\MailTransport\File'
+            ],
+        ],
+    ],
+    'doctrine' => array(
+        'configuration' => array(
+            'odm_default' => array(
+                'default_db' => 'identityModuleTest'
+            )
         ),
     ),
+    'view_manager' => [
+        'base_path' => 'http://testpath.com'
+    ],
     'service_manager' => array(
         'invokables' => array(
-            'Zend\Authentication\AuthenticationService' => 'Sds\UserModule\Test\TestAsset\MockAuthenticationService',
+            'Zend\Authentication\AuthenticationService' => 'Sds\IdentityModule\Test\TestAsset\MockAuthenticationService',
         ),
         'factories' => array(
-            'sds.mailTransport.file' => function(){
+            'Sds\IdentityModule\MailTransport\File' => function(){
                 return new \Zend\Mail\Transport\File(new \Zend\Mail\Transport\FileOptions([
-                    'path' => __DIR__ . '/email/',
+                    'path' => __DIR__ . '/email',
                     'callback' => function(){return 'test_mail.tmp';}
                 ]));
             },
         ),
     ),
-);
+];

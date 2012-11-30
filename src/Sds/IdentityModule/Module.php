@@ -5,7 +5,7 @@
  */
 namespace Sds\IdentityModule;
 
-use Sds\IdentityModule\Crypt\EmailKey;
+use Sds\IdentityModule\Crypt\Email;
 use Zend\Mvc\MvcEvent;
 
 /**
@@ -24,7 +24,9 @@ class Module
      */
     public function onBootstrap(MvcEvent $event)
     {
-        EmailKey::setKey($event->getTarget()->getServiceManager()->get('Config')['sds']['identity']['emailCryptKey']);
+        $config = $event->getTarget()->getServiceManager()->get('Config')['sds']['identity'];
+        Email::setKey($config['email']['key']);
+        Email::setSalt($config['email']['salt']);
     }
 
     public function getConfig(){

@@ -1,14 +1,14 @@
 <?php
 
-namespace Sds\UserModule\Test\TestAsset;
+namespace Sds\IdentityModule\Test\TestAsset;
 
-use Sds\UserModule\DataModel\User;
+use Sds\IdentityModule\DataModel\Identity;
 
 class MockAuthenticationService {
 
     public function getIdentity(){
-        $user = new User;
-        $user->setName('toby');
-        return $user;
+        $identity = new Identity;
+        $identity->setIdentityName('toby');
+        return $identity;
     }
 }

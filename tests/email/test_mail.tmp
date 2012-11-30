@@ -1,10 +1,10 @@
-Date: Thu, 27 Sep 2012 15:59:34 +1000
-From: sds@usermodule.dummy
+Date: Fri, 30 Nov 2012 12:13:25 +1100
+From: sds@identitymodule.dummy
 To: toby@awesome.com
-Subject: Password Recovery
+Subject: recover password
 
-You have been sent this email because a new password was requested for user toby.
+You have been sent this email because a new password was requested for user: toby.
 
-To create your new password, please follow this link: http://localhost?username=toby&recoverPassword=a1549b5c97011ff3436dad31d8c23d511562f712.
+To create your new password, please follow this link: http://testpath.com/forgotCredential/62895e7f679894b82b52d8994562451c55d60e83
 
 This link will remain active for 4 hours.

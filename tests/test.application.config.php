@@ -1,7 +1,7 @@
 <?php
 return array(
     'modules' => array(
-        'Sds\UserModule',
+        'Sds\IdentityModule',
         'DoctrineModule',
         'DoctrineMongoODMModule',
         'Sds\DoctrineExtensionsModule',

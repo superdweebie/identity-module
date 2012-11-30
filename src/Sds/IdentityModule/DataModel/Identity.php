@@ -50,7 +50,8 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
      * @ODM\String
      * @Sds\Serializer(@Sds\Ignore("down"))
      * @Sds\CryptBlockCipher(
-     *     keyClass = "Sds\IdentityModule\Crypt\EmailKey"
+     *     keyClass = "Sds\IdentityModule\Crypt\Email",
+     *     saltClass = "Sds\IdentityModule\Crypt\Email"
      * )
      * @Sds\RequiredValidator,
      * @Sds\EmailAddressValidator
@@ -63,20 +64,6 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
      * )
      */
     protected $profile;
-
-    /**
-     *
-     * @ODM\Timestamp
-     * @Sds\Serializer(@Sds\Ignore)
-     */
-    protected $forgotCredentialExpires;
-
-    /**
-     *
-     * @ODM\String
-     * @Sds\Serializer(@Sds\Ignore("down"))
-     */
-    protected $forgotCredentialCode;
 
     public function getEmail() {
         return $this->email;
@@ -108,21 +95,5 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
 
     public function setProfile(Profile $profile) {
         $this->profile = $profile;
-    }
-
-    public function getForgotCredentialExpires() {
-        return $this->forgotCredentialExpires;
-    }
-
-    public function setForgotCredentialExpires($forgotCredentialExpires) {
-        $this->forgotCredentialExpires = $forgotCredentialExpires;
-    }
-
-    public function getForgotCredentialCode() {
-        return $this->forgotCredentialCode;
-    }
-
-    public function setForgotCredentialCode($forgotCredentialCode) {
-        $this->forgotCredentialCode = $forgotCredentialCode;
     }
 }
