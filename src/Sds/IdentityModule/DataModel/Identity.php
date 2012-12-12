@@ -25,6 +25,7 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer(@Sds\ClassName)
+ * @Sds\RestUrl("IdentityModule/Identity/")
  */
 class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdentityInterface
 {

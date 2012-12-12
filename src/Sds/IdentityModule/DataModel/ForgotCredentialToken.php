@@ -18,6 +18,7 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer(@Sds\Ignore)
+ * @Sds\RestUrl("IdentityModule/ForgotCredentialToken/")
  */
 class ForgotCredentialToken
 {

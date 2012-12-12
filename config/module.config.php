@@ -32,14 +32,17 @@ return array(
                 'Sds\DoctrineExtensions\Serializer' => null,
                 'Sds\DoctrineExtensions\Validator' => ['validateOnFlush' => false],
                 'Sds\DoctrineExtensions\Crypt' => null,
-                'Sds\DoctrineExtensions\Dojo' => array(
-                    'destPaths' => array(
-                        'all' => array(
+                'Sds\DoctrineExtensions\Rest' => [
+                    'basePath' => 'http://localhost/ZendSkeletonApplication/'
+                ],
+                'Sds\DoctrineExtensions\Dojo' => [
+                    'destPaths' => [
+                        'all' => [
                             'filter' => 'Sds\IdentityModule',
                             'path' => 'vendor/dojo'
-                        ),
-                    ),
-                ),
+                        ],
+                    ],
+                ],
             ),
         ),
         'accessControl' => array(
