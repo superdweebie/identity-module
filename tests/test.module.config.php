@@ -10,7 +10,9 @@ return [
     'doctrine' => array(
         'configuration' => array(
             'odm_default' => array(
-                'default_db' => 'identityModuleTest'
+                'default_db'   => 'identityModuleTest',
+                'proxy_dir'    => __DIR__ . '/Proxy',
+                'hydrator_dir' => __DIR__ . '/Hydrator',
             )
         ),
     ),
