@@ -14,15 +14,13 @@
     ],
     "require": {
         "php": ">=5.4",
-        "superdweebie/common": "dev-master",
-        "superdweebie/json-controller": "dev-master",
+        "superdweebie/doctrine-extensions-module": "dev-master",
         "superdweebie/module-unit-tester": "dev-master",
         "zendframework/zendframework": "dev-master"
     },
     "suggest": {
         "superdweebie/dojo": "Composer based dojo install",
-        "dojo/Sds": "Contains a dojo based js client to consume the services of identityModule",
-        "superdweebie/doctrine-extensions-module": "Enables annotations in identity model"
+        "dojo/Sds": "Contains a dojo based js client to consume the services of identityModule"
     },
     "autoload": {
         "psr-0": {
