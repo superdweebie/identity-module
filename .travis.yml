@@ -6,13 +6,13 @@ php:
 env:
   - MONGO_VERSION=1.2.12
 
+services: mongodb
+
 before_script:
   - pecl -q install mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - cd ..
   - git clone git://github.com/zendframework/ZendSkeletonApplication.git
   - cd ZendSkeletonApplication
-  - mkdir data/DoctrineMongoODMModule
-  - mkdir data/DoctrineMongoODMModule/Hydrator
   - rm .gitmodules
   - git rm --cached vendor/ZF2
   - cp ../identityModule/.travis/composer.json ./
@@ -21,10 +21,7 @@ before_script:
   - rm -rf vendor/superdweebie/identity-module
   - cp -r ../identityModule vendor/superdweebie/
   - mv vendor/superdweebie/identityModule vendor/superdweebie/identity-module
-  - rm config/application.config.php
 
 script:
   - cd vendor/superdweebie/identity-module
   - phpunit
-
-language: php
