@@ -51,17 +51,19 @@ class SdsIdentityModuleDataModelIdentityHydrator implements HydratorInterface
             $hydratedData['email'] = $return;
         }
 
-        /** @EmbedOne */
+        /** @ReferenceOne */
         if (isset($data['profile'])) {
-            $embeddedDocument = $data['profile'];
-            $className = $this->dm->getClassNameFromDiscriminatorValue($this->class->fieldMappings['profile'], $embeddedDocument);
-            $embeddedMetadata = $this->dm->getClassMetadata($className);
-            $return = $embeddedMetadata->newInstance();
-
-            $embeddedData = $this->dm->getHydratorFactory()->hydrate($return, $embeddedDocument, $hints);
-            $this->unitOfWork->registerManaged($return, null, $embeddedData);
-            $this->unitOfWork->setParentAssociation($return, $this->class->fieldMappings['profile'], $document, 'profile');
-
+            $reference = $data['profile'];
+            if (isset($this->class->fieldMappings['profile']['simple']) && $this->class->fieldMappings['profile']['simple']) {
+                $className = $this->class->fieldMappings['profile']['targetDocument'];
+                $mongoId = $reference;
+            } else {
+                $className = $this->dm->getClassNameFromDiscriminatorValue($this->class->fieldMappings['profile'], $reference);
+                $mongoId = $reference['$id'];
+            }
+            $targetMetadata = $this->dm->getClassMetadata($className);
+            $id = $targetMetadata->getPHPIdentifierValue($mongoId);
+            $return = $this->dm->getReference($className, $id);
             $this->class->reflFields['profile']->setValue($document, $return);
             $hydratedData['profile'] = $return;
         }

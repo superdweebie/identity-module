@@ -104,7 +104,7 @@ class ForgotCredentialTokenController extends JsonRestfulController
             'expires' => $expiry + time()
         ]);
 
-        $link = '/forgotCredential/' . $code;
+        $link = '/forgotCredentialToken/' . $code;
 
         // Create email body
         $body = new ViewModel([

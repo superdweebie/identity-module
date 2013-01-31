@@ -6,6 +6,7 @@ use Sds\Common\Crypt\Hash;
 use Sds\IdentityModule\DataModel\Identity;
 use Sds\ModuleUnitTester\AbstractControllerTest;
 use Zend\Http\Request;
+use Zend\Http\Header\GenericHeader;
 
 class ForgotCredentialTokenControllerTest extends AbstractControllerTest{
 
@@ -19,10 +20,10 @@ class ForgotCredentialTokenControllerTest extends AbstractControllerTest{
 
     public static function tearDownAfterClass(){
         //Cleanup db after all tests have run
-//        $collections = static::$staticDcumentManager->getConnection()->selectDatabase('identityModuleTest')->listCollections();
-//        foreach ($collections as $collection) {
-//            $collection->remove(array(), array('safe' => true));
-//        }
+        $collections = static::$staticDcumentManager->getConnection()->selectDatabase('identityModuleTest')->listCollections();
+        foreach ($collections as $collection) {
+            $collection->remove(array(), array('safe' => true));
+        }
     }
 
     public function setUp(){
@@ -54,10 +55,11 @@ class ForgotCredentialTokenControllerTest extends AbstractControllerTest{
     public function testCreateTokenWithEmail(){
 
         $this->request->setMethod(Request::METHOD_POST);
+        $this->request->getHeaders()->addHeader(GenericHeader::fromString('Content-type: application/json'));
         $this->request->setContent('{
             "email": "toby@awesome.com"
         }');
-        $result = $this->controller->dispatch($this->request, $this->response);
+        $result = $this->getController()->dispatch($this->request, $this->response);
         $returnArray = $result->getVariables();
 
         $this->assertCount(0, $returnArray);
@@ -70,16 +72,17 @@ class ForgotCredentialTokenControllerTest extends AbstractControllerTest{
 
         //complete the password recovery
         $text = file_get_contents(__DIR__ . '/../../../../email/test_mail.tmp');
-        preg_match('/\/[a-zA-Z0-9]+\n/', $text, $match);
-        $code = substr($match[0], 1, -1);
+        preg_match('/forgotCredentialToken\/[a-zA-Z0-9]+/', $text, $match);
+        $code = str_replace('forgotCredentialToken/', '', $match[0]);
 
         $this->routeMatch->setParam('id', $code);
         $this->request->setMethod(Request::METHOD_PUT);
+        $this->request->getHeaders()->addHeader(GenericHeader::fromString('Content-type: application/json'));
         $this->request->setContent('{
             "credential": "newPassword1"
         }');
 
-        $result = $this->controller->dispatch($this->request, $this->response);
+        $result = $this->getController()->dispatch($this->request, $this->response);
         $returnArray = $result->getVariables();
 
         $this->assertCount(0, $returnArray);

@@ -1,8 +1,7 @@
 <?php
 return array(
-    'sds' => array(
-        'identity' => array(
-            'enableAccessControl' => false,
+    'sds' => [
+        'identity' => [
             'sharedControllerOptions' => [
                 'documentManager' => 'doctrine.documentmanager.odm_default',
                 'documentValidator' => 'Sds\DoctrineExtensions\DocumentValidator',
@@ -25,13 +24,13 @@ return array(
                 'salt' => 'qw4q35varyw456vaertwqetsvtruerraw45q3s',
                 'key' => 'change this key phrase in your own app',
             ]
-        ),
-        'doctrineExtensions' => array(
-            'extensionConfigs' => array(
-                'Sds\DoctrineExtensions\Readonly' => null,
-                'Sds\DoctrineExtensions\Serializer' => null,
-                'Sds\DoctrineExtensions\Validator' => ['validateOnFlush' => false],
-                'Sds\DoctrineExtensions\Crypt' => null,
+        ],
+        'doctrineExtensions' => [
+            'extensionConfigs' => [
+                'Sds\DoctrineExtensions\Readonly' => true,
+                'Sds\DoctrineExtensions\Serializer' => true,
+                'Sds\DoctrineExtensions\Validator' => true,
+                'Sds\DoctrineExtensions\Crypt' => true,
                 'Sds\DoctrineExtensions\Rest' => [
                     'basePath' => 'http://localhost/ZendSkeletonApplication/'
                 ],
@@ -43,69 +42,22 @@ return array(
                         ],
                     ],
                 ],
-            ),
-        ),
-        'accessControl' => array(
-            'controllers' => array(
-                'identity' => array(
-                    'actions' => array(
-                        'forgotCredentialPart1' => array(
-                            'roles' => array(
-                                \Sds\Common\AccessControl\Constant\Role::guest
-                            ),
-                        ),
-                    ),
-                ),
-                'identityRest' => array(
-                    'actions' => array(
-                        'create' => array(
-                            'roles' => array(
-                                \Sds\Common\AccessControl\Constant\Role::guest
-                            ),
-                        ),
-                        'read' => array(
-                            'roles' => array(
-                                \Sds\Common\AccessControl\Constant\Role::guest
-                            ),
-                        ),
-                        'update' => array(
-                            'roles' => array(
-                                \Sds\Common\AccessControl\Constant\Role::guest
-                            ),
-                        ),
-                        'delete' => array(
-                            'roles' => array(
-                                \Sds\Common\AccessControl\Constant\Role::guest
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
+            ],
+        ],
+    ],
 
-    'router' => array(
-        'routes' => array(
-            'Sds\Identity' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/identity',
-                    'defaults' => array(
-                        'controller' => 'Sds\IdentityModule\Controller\IdentityController',
-                    ),
-                ),
-            ),
-            'Sds\ForgotCredential' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/forgotCredential',
-                    'defaults' => array(
-                        'controller' => 'Sds\IdentityModule\Controller\ForgotCredentialTokenController',
-                    ),
-                ),
-            ),
-        ),
-    ),
+    'router' => [
+        'routes' => [
+//            'Sds\Zf2Extensions\RestRoute' => [
+//                'options' => [
+//                    'endpointToControllerMap' => [
+//                        'identity' => 'Sds\IdentityModule\Controller\IdentityController',
+//                        'forgotCredentialToken' => 'Sds\IdentityModule\Controller\ForgotCredentialTokenController'
+//                    ],
+//                ],
+//            ],
+        ],
+    ],
 
     'controllers' => array(
         'factories' => array(

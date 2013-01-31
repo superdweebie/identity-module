@@ -25,7 +25,11 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer(@Sds\ClassName)
- * @Sds\RestUrl("IdentityModule/Identity/")
+ * @Sds\Rest
+ * @Sds\Generator({
+ *     @Sds\Dojo\Model,
+ *     @Sds\Dojo\JsonRest
+ * })
  */
 class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdentityInterface
 {
@@ -35,34 +39,32 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
 
     /**
      * @ODM\String
-     * @Sds\RequiredValidator
-     * @Sds\PersonalNameValidator
+     * @Sds\Validator\Required
+     * @Sds\Validator\PersonalName
      */
     protected $firstname;
 
     /**
      * @ODM\Field(type="string")
-     * @Sds\RequiredValidator,
-     * @Sds\PersonalNameValidator
+     * @Sds\Validator\Required,
+     * @Sds\Validator\PersonalName
      */
     protected $lastname;
 
     /**
      * @ODM\String
-     * @Sds\Serializer(@Sds\Ignore("down"))
+     * @Sds\Serializer(@Sds\Ignore("ignore_when_serializing"))
      * @Sds\CryptBlockCipher(
      *     keyClass = "Sds\IdentityModule\Crypt\Email",
      *     saltClass = "Sds\IdentityModule\Crypt\Email"
      * )
-     * @Sds\RequiredValidator,
-     * @Sds\EmailAddressValidator
+     * @Sds\Validator\Required,
+     * @Sds\Validator\EmailAddress
      */
     protected $email;
 
     /**
-     * @ODM\EmbedOne(
-     *     targetDocument="Sds\IdentityModule\DataModel\Profile"
-     * )
+     * @ODM\ReferenceOne(targetDocument="Profile", simple=true, cascade="all")
      */
     protected $profile;
 

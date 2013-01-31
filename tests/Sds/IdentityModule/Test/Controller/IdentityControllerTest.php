@@ -5,6 +5,7 @@ namespace Sds\IdentityModule\Test\Controller;
 use Sds\DoctrineExtensions\Crypt\BlockCipherService;
 use Sds\IdentityModule\DataModel\Identity;
 use Sds\ModuleUnitTester\AbstractControllerTest;
+use Zend\Http\Header\GenericHeader;
 use Zend\Http\Request;
 
 class IdentityControllerTest extends AbstractControllerTest{
@@ -54,14 +55,14 @@ class IdentityControllerTest extends AbstractControllerTest{
 
         $this->request->setMethod(Request::METHOD_GET);
         $this->routeMatch->setParam('id', 'notToby');
-        $this->controller->dispatch($this->request, $this->response);
+        $this->getController()->dispatch($this->request, $this->response);
     }
 
     public function testGetSucceed(){
 
         $this->request->setMethod(Request::METHOD_GET);
         $this->routeMatch->setParam('id', 'toby');
-        $result = $this->controller->dispatch($this->request, $this->response);
+        $result = $this->getController()->dispatch($this->request, $this->response);
         $returnArray = $result->getVariables();
 
         $this->assertEquals('toby', $returnArray['identityName']);
@@ -72,6 +73,7 @@ class IdentityControllerTest extends AbstractControllerTest{
         $this->setExpectedException('Sds\DoctrineExtensionsModule\Exception\InvalidArgumentException');
 
         $this->request->setMethod(Request::METHOD_POST);
+        $this->request->getHeaders()->addHeader(GenericHeader::fromString('Content-type: application/json'));
         $this->request->setContent('{
             "identityName": "lucy",
             "firstname":"Lucy",
@@ -79,7 +81,7 @@ class IdentityControllerTest extends AbstractControllerTest{
             "email":"invalid email",
             "credential":"invalid password"
         }');
-        $this->controller->dispatch($this->request, $this->response);
+        $this->getController()->dispatch($this->request, $this->response);
     }
 
     public function testRegisterSucceed(){
@@ -87,6 +89,7 @@ class IdentityControllerTest extends AbstractControllerTest{
         $documentManager = $this->documentManager;
 
         $this->request->setMethod(Request::METHOD_POST);
+        $this->request->getHeaders()->addHeader(GenericHeader::fromString('Content-type: application/json'));
         $this->request->setContent('{
             "identityName": "lucy",
             "firstname":"Lucy",
@@ -94,7 +97,7 @@ class IdentityControllerTest extends AbstractControllerTest{
             "email":"lucy@awesome.com",
             "credential":"password1"
         }');
-        $result = $this->controller->dispatch($this->request, $this->response);
+        $result = $this->getController()->dispatch($this->request, $this->response);
         $returnArray = $result->getVariables();
         $this->assertEquals('lucy', $returnArray['identityName']);
 
@@ -119,11 +122,12 @@ class IdentityControllerTest extends AbstractControllerTest{
 
         $this->routeMatch->setParam('id', 'lucy');
         $this->request->setMethod(Request::METHOD_PUT);
+        $this->request->getHeaders()->addHeader(GenericHeader::fromString('Content-type: application/json'));
         $this->request->setContent('{
             "lastname":"Smiles",
             "email":"lucy@smiles.com"
         }');
-        $result = $this->controller->dispatch($this->request, $this->response);
+        $result = $this->getController()->dispatch($this->request, $this->response);
         $returnArray = $result->getVariables();
         $this->assertEquals('lucy', $returnArray['identityName']);
         $this->assertEquals('Smiles', $returnArray['lastname']);
@@ -149,10 +153,11 @@ class IdentityControllerTest extends AbstractControllerTest{
 
         $this->routeMatch->setParam('id', 'lucy');
         $this->request->setMethod(Request::METHOD_PUT);
+        $this->request->getHeaders()->addHeader(GenericHeader::fromString('Content-type: application/json'));
         $this->request->setContent('{
             "credential":"password2"
         }');
-        $result = $this->controller->dispatch($this->request, $this->response);
+        $result = $this->getController()->dispatch($this->request, $this->response);
         $result->getVariables();
     }
 }

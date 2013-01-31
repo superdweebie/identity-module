@@ -18,7 +18,11 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer(@Sds\Ignore)
- * @Sds\RestUrl("IdentityModule/ForgotCredentialToken/")
+ * @Sds\Rest
+ * @Sds\Generator({
+ *     @Sds\Dojo\Model,
+ *     @Sds\Dojo\JsonRest
+ * })
  */
 class ForgotCredentialToken
 {
