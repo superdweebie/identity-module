@@ -41,6 +41,9 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
      * @ODM\String
      * @Sds\Validator\Required
      * @Sds\Validator\PersonalName
+     * @Sds\Generator({
+     *     @Sds\Dojo\Input
+     * })
      */
     protected $firstname;
 
@@ -48,6 +51,9 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
      * @ODM\Field(type="string")
      * @Sds\Validator\Required,
      * @Sds\Validator\PersonalName
+     * @Sds\Generator({
+     *     @Sds\Dojo\Input
+     * })
      */
     protected $lastname;
 
@@ -60,6 +66,9 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
      * )
      * @Sds\Validator\Required,
      * @Sds\Validator\EmailAddress
+     * @Sds\Generator({
+     *     @Sds\Dojo\Input
+     * })
      */
     protected $email;
 
