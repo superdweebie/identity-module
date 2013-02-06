@@ -5,9 +5,14 @@
  */
 namespace Sds\IdentityModule\DataModel;
 
+use Sds\Common\AccessControl\AccessControlledInterface;
+use Sds\Common\AccessControl\Constant\Action;
+use Sds\Common\AccessControl\Constant\Role;
 use Sds\Common\Identity\CredentialInterface;
 use Sds\Common\Identity\IdentityInterface;
 use Sds\Common\Identity\RoleAwareIdentityInterface;
+use Sds\DoctrineExtensions\AccessControl\DataModel\AccessControlledTrait;
+use Sds\DoctrineExtensions\AccessControl\DataModel\Permission;
 use Sds\DoctrineExtensions\Identity\DataModel\CredentialTrait;
 use Sds\DoctrineExtensions\Identity\DataModel\IdentityTrait;
 use Sds\DoctrineExtensions\Identity\DataModel\RoleAwareIdentityTrait;
@@ -28,34 +33,22 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @Sds\Rest
  * @Sds\Generator({
  *     @Sds\Dojo\Model,
- *     @Sds\Dojo\JsonRest
+ *     @Sds\Dojo\JsonRest,
+ *     @Sds\Dojo\ModelValidator
  * })
  */
-class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdentityInterface
+class Identity implements
+    CredentialInterface,
+    IdentityInterface,
+    RoleAwareIdentityInterface,
+    AccessControlledInterface
 {
+    use AccessControlledTrait;
     use CredentialTrait;
-    use IdentityTrait;
+    use IdentityTrait {
+        IdentityTrait::setIdentityName as traitSetIdentityName;
+    }
     use RoleAwareIdentityTrait;
-
-    /**
-     * @ODM\String
-     * @Sds\Validator\Required
-     * @Sds\Validator\PersonalName
-     * @Sds\Generator({
-     *     @Sds\Dojo\Input
-     * })
-     */
-    protected $firstname;
-
-    /**
-     * @ODM\Field(type="string")
-     * @Sds\Validator\Required,
-     * @Sds\Validator\PersonalName
-     * @Sds\Generator({
-     *     @Sds\Dojo\Input
-     * })
-     */
-    protected $lastname;
 
     /**
      * @ODM\String
@@ -73,7 +66,12 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
     protected $email;
 
     /**
-     * @ODM\ReferenceOne(targetDocument="Profile", simple=true, cascade="all")
+     * @ODM\ReferenceOne(
+     *     targetDocument = "Profile",
+     *     mappedBy = "identityName",
+     *     simple = true,
+     *     cascade = "all"
+     * )
      */
     protected $profile;
 
@@ -85,27 +83,35 @@ class Identity implements CredentialInterface, IdentityInterface, RoleAwareIdent
         $this->email = (string) $email;
     }
 
-    public function getFirstname() {
-        return $this->firstname;
-    }
-
-    public function setFirstname($firstname) {
-        $this->firstname = $firstname;
-    }
-
-    public function getLastname() {
-        return $this->lastname;
-    }
-
-    public function setLastname($lastname) {
-        $this->lastname = $lastname;
-    }
-
     public function getProfile() {
         return $this->profile;
     }
 
     public function setProfile(Profile $profile) {
         $this->profile = $profile;
+    }
+
+    public function __construct() {
+        $this->setPermissions([
+            new Permission(Role::guest, Action::read),
+            new Permission(Role::guest, Action::create),
+            new Permission(Role::admin, Action::delete),
+            new Permission(Role::superAdmin, Action::update)
+        ]);
+
+        $this->setRoles([Role::guest, Role::user]);
+    }
+
+    public function setIdentityName($identityName){
+        $this->traitSetIdentityName($identityName);
+
+        $identityRole = 'identity-' . $identityName;
+
+        //Add permission so that only an identity is allowed to update themselves
+        $this->addPermission(
+            new Permission($identityRole, Action::update)
+        );
+
+        $this->addRole($identityRole);
     }
 }
