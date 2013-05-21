@@ -3,7 +3,7 @@ return array(
     'sds' => [
         'identity' => [
             'sharedControllerOptions' => [
-                'documentManager' => 'doctrine.documentmanager.odm_default',
+                'documentManager' => 'doctrine.odm.documentmanager.default',
                 'documentValidator' => 'Sds\DoctrineExtensions\DocumentValidator',
                 'serializer' => 'Sds\DoctrineExtensions\Serializer',
             ],
@@ -82,7 +82,7 @@ return array(
 
     'doctrine' => array(
         'driver' => array(
-            'odm_default' => array(
+            'default' => array(
                 'drivers' => array(
                     'Sds\IdentityModule\DataModel' => 'Sds\IdentityModule\DataModel'
                 ),

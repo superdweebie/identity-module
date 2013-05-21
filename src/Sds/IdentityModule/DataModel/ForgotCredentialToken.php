@@ -17,12 +17,11 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @author  Tim Roediger <superdweebie@gmail.com>
  *
  * @ODM\Document
- * @Sds\Serializer(@Sds\Ignore)
+ * @Sds\Serializer\Ignore
  * @Sds\Rest
- * @Sds\Generator({
- *     @Sds\Dojo\Model,
- *     @Sds\Dojo\JsonRest
- * })
+ * @Sds\Dojo\Model
+ * @Sds\Dojo\JsonRest
+ * 
  */
 class ForgotCredentialToken
 {

@@ -8,13 +8,15 @@ return [
         ],
     ],
     'doctrine' => array(
-        'configuration' => array(
-            'odm_default' => array(
-                'default_db'   => 'identityModuleTest',
-                'proxy_dir'    => __DIR__ . '/Proxy',
-                'hydrator_dir' => __DIR__ . '/Hydrator',
-            )
-        ),
+        'odm' => [
+            'configuration' => array(
+                'default' => array(
+                    'default_db'   => 'identityModuleTest',
+                    'proxy_dir'    => __DIR__ . '/Proxy',
+                    'hydrator_dir' => __DIR__ . '/Hydrator',
+                )
+            ),
+        ]
     ),
     'view_manager' => [
         'base_path' => 'http://testpath.com'

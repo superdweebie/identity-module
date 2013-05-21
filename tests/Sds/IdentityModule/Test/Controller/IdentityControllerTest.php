@@ -32,7 +32,7 @@ class IdentityControllerTest extends AbstractControllerTest{
 
         parent::setUp();
 
-        $this->documentManager = $this->serviceManager->get('doctrine.documentmanager.odm_default');
+        $this->documentManager = $this->serviceManager->get('doctrine.odm.documentmanager.default');
         static::$staticDcumentManager = $this->documentManager;
 
         if ( ! static::$dbIdentityCreated){
