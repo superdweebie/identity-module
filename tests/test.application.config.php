@@ -1,10 +1,12 @@
 <?php
 return array(
     'modules' => array(
-        'Sds\IdentityModule',
+        'Sds\ExceptionModule',
         'DoctrineModule',
         'DoctrineMongoODMModule',
         'Sds\DoctrineExtensionsModule',
+        'Sds\IdentityModule',
+        'Sds\AuthenticationModule'
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

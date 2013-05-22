@@ -2,8 +2,8 @@
 return [
     'sds' => [
         'identity' => [
-            'forgotCredentialTokenControllerOptions' => [
-                'mailTransport' => 'Sds\IdentityModule\MailTransport\File'
+            'forgot_credential_token_controller_options' => [
+                'mail_transport' => 'Sds\IdentityModule\MailTransport\File'
             ],
         ],
     ],
@@ -22,9 +22,6 @@ return [
         'base_path' => 'http://testpath.com'
     ],
     'service_manager' => array(
-        'invokables' => array(
-            'Zend\Authentication\AuthenticationService' => 'Sds\IdentityModule\Test\TestAsset\MockAuthenticationService',
-        ),
         'factories' => array(
             'Sds\IdentityModule\MailTransport\File' => function(){
                 return new \Zend\Mail\Transport\File(new \Zend\Mail\Transport\FileOptions([

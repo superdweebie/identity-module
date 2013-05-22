@@ -1,6 +1,0 @@
-{
-    "minimum-stability": "dev",
-    "require": {
-        "superdweebie/identity-module"       : "dev-master"
-    }
-}

@@ -1,13 +1,21 @@
 <?php
-$applicationRoot = __DIR__ . '/../../../../';
 
-chdir($applicationRoot);
+ini_set('error_reporting', E_ALL);
 
-$loader = require_once('vendor/autoload.php');
+$files = array(
+    __DIR__ . '/../vendor/autoload.php' /*independent testing*/,
+    __DIR__ . '/../../../autoload.php'  /*testing as part of a larger package*/);
+
+foreach ($files as $file) {
+    if (file_exists($file)) {
+        $loader = require $file;
+
+        break;
+    }
+}
+
+if (! isset($loader)) {
+    throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
+}
+
 $loader->add('Sds\\IdentityModule\\Test', __DIR__);
-$loader->add('Sds\\DoctrineExtensionsModule\\Test', __DIR__ . '/../../doctrine-extensions-module/tests');
-$loader->add('Sds\\ModuleUnitTester', __DIR__ . '/../../../superdweebie/module-unit-tester/lib');
-
-$config = include(__DIR__ . '/test.application.config.php');
-
-\Sds\ModuleUnitTester\AbstractTest::setApplicationConfig($config);

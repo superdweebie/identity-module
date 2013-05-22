@@ -2,23 +2,23 @@
 return array(
     'sds' => [
         'identity' => [
-            'sharedControllerOptions' => [
-                'documentManager' => 'doctrine.odm.documentmanager.default',
-                'documentValidator' => 'Sds\DoctrineExtensions\DocumentValidator',
-                'serializer' => 'Sds\DoctrineExtensions\Serializer',
+            'shared_controller_options' => [
+                'document_manager' => 'doctrine.odm.documentmanager.default',
+                'document_validator' => 'doctrineextensions.default.documentvalidator',
+                'serializer' => 'doctrineextensions.default.serializer',
             ],
-            'identityControllerOptions' => [
-                'documentClass' => 'Sds\IdentityModule\DataModel\Identity',
+            'identity_controller_options' => [
+                'document_class' => 'Sds\IdentityModule\DataModel\Identity',
                 'limit' => 30 //max number of records returned from getList
             ],
-            'forgotCredentialTokenControllerOptions' => [
-                'documentClass' => 'Sds\IdentityModule\DataModel\ForgotCredentialToken',
+            'forgot_credential_token_controller_options' => [
+                'document_class' => 'Sds\IdentityModule\DataModel\ForgotCredentialToken',
                 'limit' => 1, //max number of records returned from getList
-                'identityClass' => 'Sds\IdentityModule\DataModel\Identity',
-                'mailTransport' => 'Sds\IdentityModule\MailTransport\Stmp',
-                'mailFrom' => 'sds@identitymodule.dummy',
+                'identity_class' => 'Sds\IdentityModule\DataModel\Identity',
+                'mail_transport' => 'Sds\IdentityModule\MailTransport\Stmp',
+                'mail_from' => 'sds@identitymodule.dummy',
                 'expiry' => 4*60*60, //time in seconds
-                'mailSubject' => 'recover password',
+                'mail_subject' => 'recover password',
             ],
             'email' => [
                 'salt' => 'qw4q35varyw456vaertwqetsvtruerraw45q3s',
@@ -26,36 +26,17 @@ return array(
             ]
         ],
         'doctrineExtensions' => [
-            'extensionConfigs' => [
-                'Sds\DoctrineExtensions\Readonly' => true,
-                'Sds\DoctrineExtensions\Serializer' => true,
-                'Sds\DoctrineExtensions\Validator' => true,
-                'Sds\DoctrineExtensions\Crypt' => true,
-                'Sds\DoctrineExtensions\Rest' => [
-                    'basePath' => 'http://localhost/ZendSkeletonApplication/'
-                ],
-                'Sds\DoctrineExtensions\Dojo' => [
-                    'destPaths' => [
-                        'all' => [
-                            'filter' => 'Sds\IdentityModule',
-                            'path' => 'vendor/dojo'
-                        ],
-                    ],
-                ],
-            ],
-        ],
-    ],
-
-    'router' => [
-        'routes' => [
-//            'Sds\Zf2Extensions\RestRoute' => [
-//                'options' => [
-//                    'endpointToControllerMap' => [
-//                        'identity' => 'Sds\IdentityModule\Controller\IdentityController',
-//                        'forgotCredentialToken' => 'Sds\IdentityModule\Controller\ForgotCredentialTokenController'
-//                    ],
-//                ],
-//            ],
+            'manifest' => [
+                'default' => [
+                    'extension_configs' => [
+                        'extension.readonly' => true,
+                        'extension.serializer' => true,
+                        'extension.validator' => true,
+                        'extension.crypt' => true,
+                        'extension.rest' => true,
+                    ]
+                ]
+            ]
         ],
     ],
 
@@ -84,13 +65,13 @@ return array(
         'driver' => array(
             'default' => array(
                 'drivers' => array(
-                    'Sds\IdentityModule\DataModel' => 'Sds\IdentityModule\DataModel'
+                    'Sds\IdentityModule\DataModel' => 'doctrine.driver.identity'
                 ),
             ),
-            'Sds\IdentityModule\DataModel' => array(
+            'identity' => array(
                 'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver',
                 'paths' => array(
-                    'vendor/superdweebie/identity-module/src/Sds/IdentityModule/DataModel'
+                    __DIR__ . '/../src/Sds/IdentityModule/DataModel'
                 ),
             ),
         ),
