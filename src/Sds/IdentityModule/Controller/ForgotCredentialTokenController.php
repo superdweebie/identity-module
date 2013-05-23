@@ -10,6 +10,8 @@ use Sds\DoctrineExtensions\Crypt\BlockCipherService;
 use Sds\DoctrineExtensionsModule\Controller\JsonRestfulController;
 use Sds\IdentityModule\Exception;
 use Sds\IdentityModule\Options\ForgotCredentialTokenController as Options;
+use Zend\Http\Header\Allow;
+use Zend\Http\Response;
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
 
@@ -22,31 +24,19 @@ use Zend\View\Model\ViewModel;
 class ForgotCredentialTokenController extends JsonRestfulController
 {
 
-    public function setOptions($options) {
-        if (!$options instanceof Options) {
-            $options = new Options($options);
-        }
-        isset($this->serviceLocator) ? $options->setServiceLocator($this->serviceLocator) : null;
+    public function getOptions() {
+        return $this->options;
+    }
+
+    public function setOptions(Options $options) {
         $this->options = $options;
     }
 
-    /**
-     * Tokens cannot be listed
-     *
-     * @return type
-     */
-    public function getList(){
-        return [];
-    }
-
-    /**
-     * Tokens cannot be got
-     *
-     * @param type $id
-     * @return type
-     */
-    public function get($id){
-        return [];
+    public function __construct(Options $options = null) {
+        if (!isset($options)){
+            $options = new Options;
+        }
+        $this->setOptions($options);
     }
 
     /**
@@ -123,7 +113,8 @@ class ForgotCredentialTokenController extends JsonRestfulController
 
         $this->options->getMailTransport()->send($mail);
 
-        return [];
+        $this->response->setStatusCode(201);
+        return $this->response;
     }
 
     /**
@@ -133,11 +124,11 @@ class ForgotCredentialTokenController extends JsonRestfulController
      * @param type $data
      * @return type
      */
-    public function update($code, $data) {
+    public function update($id, $data) {
 
         $documentManager = $this->options->getDocumentManager();
         $token = $documentManager->createQueryBuilder($this->options->getDocumentClass())
-            ->field('code')->equals($code)
+            ->field('code')->equals($id)
             ->field('expires')->gt(new \DateTime)
             ->getQuery()
             ->getSingleResult();
@@ -164,7 +155,48 @@ class ForgotCredentialTokenController extends JsonRestfulController
         $documentManager->remove($token);
         $documentManager->flush();
 
-        return [];
+        $this->response->setStatusCode(201);
+        return $this->response;
+    }
+
+    /**
+     * Tokens cannot be listed
+     *
+     * @return type
+     */
+    public function getList(){
+        $allow = new Allow;
+        $allow->allowMethods(Response::POST);
+        $this->response->setStatusCode(405);
+        $this->response->getHeaders()->addHeader($allow);
+        return $this->response;
+    }
+
+    /**
+     * Tokens cannot be got
+     *
+     * @param type $id
+     * @return type
+     */
+    public function get($id){
+        $allow = new Allow;
+        $allow->allowMethods(Response::PUT);
+        $this->response->setStatusCode(405);
+        $this->response->getHeaders()->addHeader($allow);
+        return $this->response;
+    }
+
+    /**
+     * Tokens cannot be deleted through the API.
+     *
+     * @param type $id
+     */
+    public function deleteList() {
+        $allow = new Allow;
+        $allow->allowMethods(Response::POST);
+        $this->response->setStatusCode(405);
+        $this->response->getHeaders()->addHeader($allow);
+        return $this->response;
     }
 
     /**
@@ -173,5 +205,36 @@ class ForgotCredentialTokenController extends JsonRestfulController
      * @param type $id
      */
     public function delete($id) {
+        $allow = new Allow;
+        $allow->allowMethods(Response::PUT);
+        $this->response->setStatusCode(405);
+        $this->response->getHeaders()->addHeader($allow);
+        return $this->response;
+    }
+
+    /**
+     * Tokens cannot be modified through the API.
+     *
+     * @param type $id
+     */
+    public function patchList() {
+        $allow = new Allow;
+        $allow->allowMethods(Response::POST);
+        $this->response->setStatusCode(405);
+        $this->response->getHeaders()->addHeader($allow);
+        return $this->response;
+    }
+
+    /**
+     * Tokens cannot be modified through the API.
+     *
+     * @param type $id
+     */
+    public function patch($id) {
+        $allow = new Allow;
+        $allow->allowMethods(Response::PUT);
+        $this->response->setStatusCode(405);
+        $this->response->getHeaders()->addHeader($allow);
+        return $this->response;
     }
 }

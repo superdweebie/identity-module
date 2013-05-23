@@ -12,6 +12,7 @@ return array(
                 'limit' => 30 //max number of records returned from getList
             ],
             'forgot_credential_token_controller_options' => [
+                'manifest_name' => 'default',
                 'document_class' => 'Sds\IdentityModule\DataModel\ForgotCredentialToken',
                 'limit' => 1, //max number of records returned from getList
                 'identity_class' => 'Sds\IdentityModule\DataModel\Identity',
@@ -42,24 +43,30 @@ return array(
 
     'controllers' => array(
         'factories' => array(
-            'Sds\IdentityModule\Controller\IdentityController' => function($serviceLocator){
-                $config = $serviceLocator
-                        ->getServiceLocator()
-                        ->get('Config')['sds']['identity'];
-                return new Sds\IdentityModule\Controller\IdentityController(
-                    array_merge($config['sharedControllerOptions'], $config['identityControllerOptions'])
-                );
-            },
-            'Sds\IdentityModule\Controller\ForgotCredentialTokenController' => function($serviceLocator){
-                $config = $serviceLocator
-                        ->getServiceLocator()
-                        ->get('Config')['sds']['identity'];
-                return new Sds\IdentityModule\Controller\ForgotCredentialTokenController(
-                    array_merge($config['sharedControllerOptions'], $config['forgotCredentialTokenControllerOptions'])
-                );
-            }
+            'rest.default.forgotcredentialtoken' => 'Sds\IdentityModule\Service\ForgotCredentialTokenControllerFactory'
         ),
     ),
+
+//    'controllers' => array(
+//        'factories' => array(
+//            'Sds\IdentityModule\Controller\IdentityController' => function($serviceLocator){
+//                $config = $serviceLocator
+//                        ->getServiceLocator()
+//                        ->get('Config')['sds']['identity'];
+//                return new Sds\IdentityModule\Controller\IdentityController(
+//                    array_merge($config['sharedControllerOptions'], $config['identityControllerOptions'])
+//                );
+//            },
+//            'Sds\IdentityModule\Controller\ForgotCredentialTokenController' => function($serviceLocator){
+//                $config = $serviceLocator
+//                        ->getServiceLocator()
+//                        ->get('Config')['sds']['identity'];
+//                return new Sds\IdentityModule\Controller\ForgotCredentialTokenController(
+//                    array_merge($config['sharedControllerOptions'], $config['forgotCredentialTokenControllerOptions'])
+//                );
+//            }
+//        ),
+//    ),
 
     'doctrine' => array(
         'driver' => array(
