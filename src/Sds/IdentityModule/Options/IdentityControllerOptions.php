@@ -5,7 +5,7 @@
  */
 namespace Sds\IdentityModule\Options;
 
-use Sds\DoctrineExtensionsModule\Options\JsonRestfulController;
+use Sds\DoctrineExtensionsModule\Options\JsonRestfulControllerOptions;
 
 /**
  *
@@ -13,6 +13,6 @@ use Sds\DoctrineExtensionsModule\Options\JsonRestfulController;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class IdentityController extends JsonRestfulController
+class IdentityControllerOptions extends JsonRestfulControllerOptions
 {
 }

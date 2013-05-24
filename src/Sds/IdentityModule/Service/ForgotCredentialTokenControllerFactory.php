@@ -4,10 +4,10 @@
  * @license    MIT
  */
 
-namespace Sds\AuthenticationModule\Service;
+namespace Sds\IdentityModule\Service;
 
 use Sds\IdentityModule\Controller\ForgotCredentialTokenController;
-use Sds\IdentityModule\Options\ForgotCredentialTokenController as Options;
+use Sds\IdentityModule\Options\ForgotCredentialTokenControllerOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -27,10 +27,9 @@ class ForgotCredentialTokenControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-
-        $options = new Options($serviceLocator->getServiceLocator()->get('config')['sds']['identity']['forgot_credential_token_controller_options']);
-        $options->setServiceLocator($serviceLocator->getServiceLocator());
-        $instance = new ForgotCredentialTokenController($options);
+        $options = $serviceLocator->getServiceLocator()->get('config')['sds']['identity']['forgot_credential_token_controller_options'];
+        $options['service_locator'] = $serviceLocator->getServiceLocator()->get('doctrineExtensions.' . $options['manifest_name'] . '.servicemanager');
+        $instance = new ForgotCredentialTokenController(new ForgotCredentialTokenControllerOptions($options));
         return $instance;
     }
 }

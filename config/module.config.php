@@ -2,24 +2,21 @@
 return array(
     'sds' => [
         'identity' => [
-            'shared_controller_options' => [
-                'document_manager' => 'doctrine.odm.documentmanager.default',
-                'document_validator' => 'doctrineextensions.default.documentvalidator',
-                'serializer' => 'doctrineextensions.default.serializer',
-            ],
             'identity_controller_options' => [
+                'document_manager' => 'doctrine.odm.documentmanager.default',
                 'document_class' => 'Sds\IdentityModule\DataModel\Identity',
                 'limit' => 30 //max number of records returned from getList
             ],
             'forgot_credential_token_controller_options' => [
-                'manifest_name' => 'default',
-                'document_class' => 'Sds\IdentityModule\DataModel\ForgotCredentialToken',
-                'limit' => 1, //max number of records returned from getList
-                'identity_class' => 'Sds\IdentityModule\DataModel\Identity',
-                'mail_transport' => 'Sds\IdentityModule\MailTransport\Stmp',
-                'mail_from' => 'sds@identitymodule.dummy',
-                'expiry' => 4*60*60, //time in seconds
-                'mail_subject' => 'recover password',
+                'document_manager' => 'doctrine.odm.documentmanager.default',
+                'endpoint'         => 'forgotcredentialtoken',
+                'manifest_name'    => 'default',
+                'document_class'   => 'Sds\IdentityModule\DataModel\ForgotCredentialToken',
+                'identity_class'   => 'Sds\IdentityModule\DataModel\Identity',
+                'mail_transport'   => 'Sds\IdentityModule\MailTransport\Stmp',
+                'mail_from'        => 'sds@identitymodule.dummy',
+                'expiry'           => 4*60*60, //time in seconds
+                'mail_subject'     => 'recover password',
             ],
             'email' => [
                 'salt' => 'qw4q35varyw456vaertwqetsvtruerraw45q3s',
@@ -30,11 +27,12 @@ return array(
             'manifest' => [
                 'default' => [
                     'extension_configs' => [
-                        'extension.readonly' => true,
-                        'extension.serializer' => true,
-                        'extension.validator' => true,
-                        'extension.crypt' => true,
-                        'extension.rest' => true,
+                        'extension.accesscontrol' => true,
+                        'extension.readonly'      => true,
+                        'extension.serializer'    => true,
+                        'extension.validator'     => true,
+                        'extension.crypt'         => true,
+                        'extension.rest'          => true,
                     ]
                 ]
             ]

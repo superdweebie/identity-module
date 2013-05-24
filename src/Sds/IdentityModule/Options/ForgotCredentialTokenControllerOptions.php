@@ -5,7 +5,7 @@
  */
 namespace Sds\IdentityModule\Options;
 
-use Sds\DoctrineExtensionsModule\Options\JsonRestfulController;
+use Sds\DoctrineExtensionsModule\Options\JsonRestfulControllerOptions;
 use Zend\View\Renderer\PhpRenderer;
 
 /**
@@ -14,7 +14,7 @@ use Zend\View\Renderer\PhpRenderer;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class ForgotCredentialTokenController extends JsonRestfulController
+class ForgotCredentialTokenControllerOptions extends JsonRestfulControllerOptions
 {
 
     protected $identityClass;

@@ -21,7 +21,7 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @Sds\Rest
  * @Sds\Dojo\Model
  * @Sds\Dojo\JsonRest
- * 
+ * @Sds\Permission\Basic(roles="all", allow={"create", "read", "delete"})
  */
 class ForgotCredentialToken
 {

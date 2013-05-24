@@ -8,8 +8,8 @@ namespace Sds\IdentityModule\Controller;
 use Sds\Common\Crypt\Hash;
 use Sds\DoctrineExtensions\Crypt\BlockCipherService;
 use Sds\DoctrineExtensionsModule\Controller\JsonRestfulController;
+use Sds\IdentityModule\DataModel\Identity;
 use Sds\IdentityModule\Exception;
-use Sds\IdentityModule\Options\ForgotCredentialTokenController as Options;
 use Zend\Http\Header\Allow;
 use Zend\Http\Response;
 use Zend\Mail\Message;
@@ -23,21 +23,6 @@ use Zend\View\Model\ViewModel;
  */
 class ForgotCredentialTokenController extends JsonRestfulController
 {
-
-    public function getOptions() {
-        return $this->options;
-    }
-
-    public function setOptions(Options $options) {
-        $this->options = $options;
-    }
-
-    public function __construct(Options $options = null) {
-        if (!isset($options)){
-            $options = new Options;
-        }
-        $this->setOptions($options);
-    }
 
     /**
      * This will start the credential reset process for an identity.
@@ -76,7 +61,8 @@ class ForgotCredentialTokenController extends JsonRestfulController
         }
 
         // create unique recovery code
-        $code = Hash::hash(time(), $identity->getIdentityName());
+        $code = base64_encode(Hash::hash(time(), $identity->getIdentityName()));
+        $code = substr($code, 0, strlen($code) - 2);
 
         $expiry = $this->options->getExpiry();
 
@@ -94,7 +80,11 @@ class ForgotCredentialTokenController extends JsonRestfulController
             'expires' => $expiry + time()
         ]);
 
-        $link = '/forgotCredentialToken/' . $code;
+        //remove the Location header so the token isn't exposed in the response
+        $headers = $this->response->getHeaders();
+        $headers->removeHeader($headers->get('Location'));
+
+        $link = '/rest/' . $this->options->getEndpoint() . '/' . $code;
 
         // Create email body
         $body = new ViewModel([
@@ -138,24 +128,19 @@ class ForgotCredentialTokenController extends JsonRestfulController
         }
 
         $identity = $documentManager->getRepository($this->options->getIdentityClass())->findOneBy(['identityName' => $token->getIdentityName()]);
-
         $identity->setCredential($data['credential']);
 
-        $documentValidator = $this->options->getDocumentValidator();
-        $documentValidator->setDocumentManager($documentManager);
-        $validatorResult = $documentValidator->isValid(
-            $identity,
-            $documentManager->getClassMetadata($this->options->getIdentityClass())
-        );
-
-        if ( ! $validatorResult->getResult()){
-            throw new Exception\InvalidArgumentException(implode(', ', $validatorResult->getMessages()));
-        }
+        //need to trick AccessControl to allow update even though there is no authenticated identity
+        $accessControlIdentity = new Identity;
+        $accessControlIdentity->addRole('forgotCredentialController');
+        $serviceLocator = $this->options->getServiceLocator();
+        $serviceLocator->setService('identity', $accessControlIdentity);
+        $serviceLocator->get('accesscontroller')->resetRoles(true);
 
         $documentManager->remove($token);
-        $documentManager->flush();
+        $this->flush();
 
-        $this->response->setStatusCode(201);
+        $this->response->setStatusCode(204);
         return $this->response;
     }
 
@@ -217,7 +202,7 @@ class ForgotCredentialTokenController extends JsonRestfulController
      *
      * @param type $id
      */
-    public function patchList() {
+    public function patchList($data) {
         $allow = new Allow;
         $allow->allowMethods(Response::POST);
         $this->response->setStatusCode(405);
@@ -230,7 +215,7 @@ class ForgotCredentialTokenController extends JsonRestfulController
      *
      * @param type $id
      */
-    public function patch($id) {
+    public function patch($id, $data) {
         $allow = new Allow;
         $allow->allowMethods(Response::PUT);
         $this->response->setStatusCode(405);

@@ -51,23 +51,6 @@ class SdsIdentityModuleDataModelIdentityHydrator implements HydratorInterface
             $hydratedData['email'] = $return;
         }
 
-        /** @ReferenceOne */
-        if (isset($data['profile'])) {
-            $reference = $data['profile'];
-            if (isset($this->class->fieldMappings['profile']['simple']) && $this->class->fieldMappings['profile']['simple']) {
-                $className = $this->class->fieldMappings['profile']['targetDocument'];
-                $mongoId = $reference;
-            } else {
-                $className = $this->dm->getClassNameFromDiscriminatorValue($this->class->fieldMappings['profile'], $reference);
-                $mongoId = $reference['$id'];
-            }
-            $targetMetadata = $this->dm->getClassMetadata($className);
-            $id = $targetMetadata->getPHPIdentifierValue($mongoId);
-            $return = $this->dm->getReference($className, $id);
-            $this->class->reflFields['profile']->setValue($document, $return);
-            $hydratedData['profile'] = $return;
-        }
-
         /** @Field(type="string") */
         if (isset($data['credential'])) {
             $value = $data['credential'];
@@ -84,7 +67,7 @@ class SdsIdentityModuleDataModelIdentityHydrator implements HydratorInterface
             $hydratedData['identityName'] = $return;
         }
 
-        /** @Field(type="hash") */
+        /** @Field(type="collection") */
         if (isset($data['roles'])) {
             $value = $data['roles'];
             $return = $value;

@@ -2,6 +2,7 @@
 
 namespace Sds\IdentityModule\Test\Controller;
 
+use Sds\Common\Crypt\Hash;
 use Sds\IdentityModule\Test\TestAsset\TestData;
 use Zend\Http\Header\Accept;
 use Zend\Http\Header\ContentType;
@@ -51,36 +52,39 @@ class ForgotCredentialTokenControllerTest extends AbstractHttpControllerTestCase
         $response = $this->getResponse();
         $result = json_decode($response->getContent(), true);
         $this->assertFalse(isset($result));
-        $this->assertResponseStatusCode(204);
+        $this->assertResponseStatusCode(201);
+        $this->assertFalse($response->getHeaders()->has('Location'));
 
         //check the email
         $this->assertTrue(file_exists(__DIR__ . '/../../../../email/test_mail.tmp'));
     }
 
-//    public function testChangeCredentialWithToken(){
-//
-//        //complete the password recovery
-//        $text = file_get_contents(__DIR__ . '/../../../../email/test_mail.tmp');
-//        preg_match('/forgotCredentialToken\/[a-zA-Z0-9]+/', $text, $match);
-//        $code = str_replace('forgotCredentialToken/', '', $match[0]);
-//
-//        $this->routeMatch->setParam('id', $code);
-//        $this->request->setMethod(Request::METHOD_PUT);
-//        $this->request->getHeaders()->addHeader(GenericHeader::fromString('Content-type: application/json'));
-//        $this->request->setContent('{
-//            "credential": "newPassword1"
-//        }');
-//
-//        $result = $this->getController()->dispatch($this->request, $this->response);
-//        $returnArray = $result->getVariables();
-//
-//        $this->assertCount(0, $returnArray);
-//
-//        $identity = $this->documentManager
-//            ->getRepository($this->controller->getOptions()->getIdentityClass())
-//            ->findOneBy(['identityName' => 'toby']);
-//
-//        $this->assertTrue(Hash::hashCredential($identity, 'newPassword1') == $identity->getCredential());
-//    }
+    public function testChangeCredentialWithToken(){
+
+        //complete the password recovery
+        $text = file_get_contents(__DIR__ . '/../../../../email/test_mail.tmp');
+        preg_match('/\/rest\/forgotcredentialtoken\/[a-zA-Z0-9]+/', $text, $match);
+
+        $accept = new Accept;
+        $accept->addMediaType('application/json');
+
+        $this->getRequest()
+            ->setMethod(Request::METHOD_PUT)
+            ->setContent('{"credential": "newPassword1"}')
+            ->getHeaders()->addHeaders([$accept, ContentType::fromString('Content-type: application/json')]);
+
+        $this->dispatch($match[0]);
+
+        $response = $this->getResponse();
+        $result = json_decode($response->getContent(), true);
+        $this->assertFalse(isset($result));
+        $this->assertResponseStatusCode(204);
+
+        $identity = $this->documentManager
+            ->getRepository('Sds\IdentityModule\DataModel\Identity')
+            ->findOneBy(['identityName' => 'toby']);
+
+        $this->assertTrue(Hash::hashCredential($identity, 'newPassword1') == $identity->getCredential());
+    }
 }
 

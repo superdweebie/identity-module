@@ -18,14 +18,6 @@ use Sds\IdentityModule\Options\IdentityController as Options;
 class IdentityController extends JsonRestfulController
 {
 
-    public function setOptions($options) {
-        if (!$options instanceof Options) {
-            $options = new Options($options);
-        }
-        isset($this->serviceLocator) ? $options->setServiceLocator($this->serviceLocator) : null;
-        $this->options = $options;
-    }
-
     /**
      * Don't allow updates to credential - must use the ForgotCredentialToken instead
      *

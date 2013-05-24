@@ -30,7 +30,7 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @Sds\Dojo\JsonRest
  * @Sds\Dojo\ModelValidator
  * @Sds\Permission\Basic(roles="all", allow={"read", "create"})
- * @Sds\Permission\Basic(roles="owner", allow="update")
+ * @Sds\Permission\Basic(roles={"owner", "forgotCredentialController"}, allow="update")
  * @Sds\Permission\Basic(roles="admin", allow="delete")
  *
  */
