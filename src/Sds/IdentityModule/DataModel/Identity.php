@@ -25,13 +25,13 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer\ClassName
- * @Sds\Rest
  * @Sds\Dojo\Model
  * @Sds\Dojo\JsonRest
  * @Sds\Dojo\ModelValidator
  * @Sds\Permission\Basic(roles="all", allow={"read", "create"})
- * @Sds\Permission\Basic(roles={"owner", "forgotCredentialController"}, allow="update")
- * @Sds\Permission\Basic(roles="admin", allow="delete")
+ * @Sds\Permission\Basic(roles="owner", allow="update")
+ * @Sds\Permission\Basic(roles="forgotCredentialController", allow="updateCredential")
+ * @Sds\Permission\Basic(roles="admin", allow={"delete", "updateRoles"})
  *
  */
 class Identity implements

@@ -13,7 +13,7 @@ return array(
                 'manifest_name'    => 'default',
                 'document_class'   => 'Sds\IdentityModule\DataModel\ForgotCredentialToken',
                 'identity_class'   => 'Sds\IdentityModule\DataModel\Identity',
-                'mail_transport'   => 'Sds\IdentityModule\MailTransport\Stmp',
+                'mail_transport'   => 'my_mail_transport_instance',
                 'mail_from'        => 'sds@identitymodule.dummy',
                 'expiry'           => 4*60*60, //time in seconds
                 'mail_subject'     => 'recover password',
@@ -32,7 +32,12 @@ return array(
                         'extension.serializer'    => true,
                         'extension.validator'     => true,
                         'extension.crypt'         => true,
-                        'extension.rest'          => true,
+                        'extension.rest'          => [
+                            'endpoint_map' => [
+                                'identity'              => 'Sds\IdentityModule\DataModel\Identity',
+                                'forgotcredentialtoken' => 'Sds\IdentityModule\DataModel\ForgotCredentialToken'
+                            ]
+                        ],
                     ]
                 ]
             ]
@@ -44,27 +49,6 @@ return array(
             'rest.default.forgotcredentialtoken' => 'Sds\IdentityModule\Service\ForgotCredentialTokenControllerFactory'
         ),
     ),
-
-//    'controllers' => array(
-//        'factories' => array(
-//            'Sds\IdentityModule\Controller\IdentityController' => function($serviceLocator){
-//                $config = $serviceLocator
-//                        ->getServiceLocator()
-//                        ->get('Config')['sds']['identity'];
-//                return new Sds\IdentityModule\Controller\IdentityController(
-//                    array_merge($config['sharedControllerOptions'], $config['identityControllerOptions'])
-//                );
-//            },
-//            'Sds\IdentityModule\Controller\ForgotCredentialTokenController' => function($serviceLocator){
-//                $config = $serviceLocator
-//                        ->getServiceLocator()
-//                        ->get('Config')['sds']['identity'];
-//                return new Sds\IdentityModule\Controller\ForgotCredentialTokenController(
-//                    array_merge($config['sharedControllerOptions'], $config['forgotCredentialTokenControllerOptions'])
-//                );
-//            }
-//        ),
-//    ),
 
     'doctrine' => array(
         'driver' => array(
@@ -79,16 +63,6 @@ return array(
                     __DIR__ . '/../src/Sds/IdentityModule/DataModel'
                 ),
             ),
-        ),
-    ),
-
-    'service_manager' => array(
-        'factories' => array(
-            'Sds\IdentityModule\MailTransport\Stmp' => function(){
-                return new \Zend\Mail\Transport\Smtp([
-                    //Add your mail settings here
-                ]);
-            },
         ),
     ),
 

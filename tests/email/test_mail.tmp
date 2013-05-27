@@ -1,10 +1,10 @@
-Date: Fri, 24 May 2013 15:16:19 +1000
+Date: Mon, 27 May 2013 13:43:55 +1000
 From: sds@identitymodule.dummy
 To: toby@awesome.com
 Subject: recover password
 
 You have been sent this email because a new password was requested for user: toby.
 
-To create your new password, please follow this link: /rest/forgotcredentialtoken/NDNlNTA5Zjg4MjU1MDc1NjcyZDNhMmRlYzgyMzFkMjlhMGExYWVjOQ
+To create your new password, please follow this link: /rest/forgotcredentialtoken/NDA0MmEyOWU1OTdkYWFiODBkZWFjZmU3OTU0YzI2NmZiZGIwMzVlMw
 
 This link will remain active for 4 hours.

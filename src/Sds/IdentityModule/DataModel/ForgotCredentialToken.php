@@ -18,7 +18,6 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer\Ignore
- * @Sds\Rest
  * @Sds\Dojo\Model
  * @Sds\Dojo\JsonRest
  * @Sds\Permission\Basic(roles="all", allow={"create", "read", "delete"})
