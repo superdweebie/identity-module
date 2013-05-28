@@ -38,6 +38,49 @@ return array(
                                 'forgotcredentialtoken' => 'Sds\IdentityModule\DataModel\ForgotCredentialToken'
                             ]
                         ],
+                        'extension.dojo' => [
+                            'persist_to_file' => false,
+                            'file_paths' => [[
+                                'filter' => 'Sds/IdentityClient',
+                                'path' => 'public/dev-assets'
+                            ]]
+                        ],
+                        'extension.generator' => [
+                            'resource_map' => [
+                                'Sds/IdentityClient/Identity/Model.js' => [
+                                    'generator' => 'generator.dojo.model',
+                                    'class'     => 'Sds\IdentityModule\DataModel\Identity',
+                                ],
+                                'Sds/IdentityClient/Identity/IdentityName/Input.js' => [
+                                    'generator' => 'generator.dojo.input',
+                                    'class'     => 'Sds\IdentityModule\DataModel\Identity',
+                                    'options'   => [
+                                        'field' => 'identityName'
+                                    ]
+                                ],
+                                'Sds/IdentityClient/Identity/IdentityName/Validator.js' => [
+                                    'generator' => 'generator.dojo.validator',
+                                    'class'     => 'Sds\IdentityModule\DataModel\Identity',
+                                    'options'   => [
+                                        'field' => 'identityName'
+                                    ]
+                                ],
+                                'Sds/IdentityClient/Identity/Credential/Input.js' => [
+                                    'generator' => 'generator.dojo.input',
+                                    'class'     => 'Sds\IdentityModule\DataModel\Identity',
+                                    'options'   => [
+                                        'field' => 'credential'
+                                    ]
+                                ],
+                                'Sds/IdentityClient/Identity/Credential/Validator.js' => [
+                                    'generator' => 'generator.dojo.validator',
+                                    'class'     => 'Sds\IdentityModule\DataModel\Identity',
+                                    'options'   => [
+                                        'field' => 'credential'
+                                    ]
+                                ],
+                            ]
+                        ]
                     ]
                 ]
             ]

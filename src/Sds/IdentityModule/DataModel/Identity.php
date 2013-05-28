@@ -25,9 +25,6 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer\ClassName
- * @Sds\Dojo\Model
- * @Sds\Dojo\JsonRest
- * @Sds\Dojo\ModelValidator
  * @Sds\Permission\Basic(roles="all", allow={"read", "create"})
  * @Sds\Permission\Basic(roles="owner", allow="update")
  * @Sds\Permission\Basic(roles="forgotCredentialController", allow="updateCredential")
@@ -48,7 +45,6 @@ class Identity implements
      * @ODM\String
      * @Sds\Validator\Required
      * @Sds\Validator\PersonalName
-     * @Sds\Dojo\Input
      */
     protected $firstname;
 
@@ -56,7 +52,6 @@ class Identity implements
      * @ODM\Field(type="string")
      * @Sds\Validator\Required
      * @Sds\Validator\PersonalName
-     * @Sds\Dojo\Input
      */
     protected $lastname;
 
@@ -69,7 +64,6 @@ class Identity implements
      * )
      * @Sds\Validator\Required
      * @Sds\Validator\EmailAddress
-     * @Sds\Dojo\Input
      */
     protected $email;
 
