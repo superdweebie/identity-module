@@ -28,7 +28,6 @@ return array(
                 'default' => [
                     'extension_configs' => [
                         'extension.accesscontrol' => true,
-                        'extension.readonly'      => true,
                         'extension.serializer'    => true,
                         'extension.validator'     => true,
                         'extension.crypt'         => true,

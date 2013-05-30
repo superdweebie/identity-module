@@ -18,7 +18,9 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer\Ignore
- * @Sds\Permission\Basic(roles="all", allow={"create", "read", "delete"})
+ * @Sds\AccessControl({
+ *     @Sds\Permission\Basic(roles="*", allow={"create", "read", "delete"})
+ * })
  */
 class ForgotCredentialToken
 {

@@ -25,10 +25,12 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  *
  * @ODM\Document
  * @Sds\Serializer\ClassName
- * @Sds\Permission\Basic(roles="all", allow={"read", "create"})
- * @Sds\Permission\Basic(roles="owner", allow="update")
- * @Sds\Permission\Basic(roles="forgotCredentialController", allow="updateCredential")
- * @Sds\Permission\Basic(roles="admin", allow={"delete", "updateRoles"})
+ * @Sds\AccessControl({
+ *     @Sds\Permission\Basic(roles="*",     allow={"read", "create"}),
+ *     @Sds\Permission\Basic(roles="owner", allow="update::*",        deny="update::roles"),
+ *     @Sds\Permission\Basic(roles="forgotCredentialController", allow="update::credential"),
+ *     @Sds\Permission\Basic(roles="admin", allow={"delete", "update::*"})
+ * })
  *
  */
 class Identity implements

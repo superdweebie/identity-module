@@ -135,7 +135,6 @@ class ForgotCredentialTokenController extends JsonRestfulController
         $accessControlIdentity->addRole('forgotCredentialController');
         $serviceLocator = $this->options->getServiceLocator();
         $serviceLocator->setService('identity', $accessControlIdentity);
-        $serviceLocator->get('accesscontroller')->resetRoles(true);
 
         $documentManager->remove($token);
         $this->flush();
