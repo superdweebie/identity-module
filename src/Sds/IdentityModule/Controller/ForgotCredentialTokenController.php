@@ -130,14 +130,15 @@ class ForgotCredentialTokenController extends JsonRestfulController
         $identity = $documentManager->getRepository($this->options->getIdentityClass())->findOneBy(['identityName' => $token->getIdentityName()]);
         $identity->setCredential($data['credential']);
 
-        //need to trick AccessControl to allow update even though there is no authenticated identity
-        $accessControlIdentity = new Identity;
-        $accessControlIdentity->addRole('forgotCredentialController');
+        //need to temporarily change identity for AccessControl to allow update even though there is no authenticated identity
+        $sysIdentity = new Identity;
+        $sysIdentity->addRole('sys::forgotcredential');
         $serviceLocator = $this->options->getServiceLocator();
-        $serviceLocator->setService('identity', $accessControlIdentity);
+        $serviceLocator->setService('identity', $sysIdentity);
 
         $documentManager->remove($token);
         $this->flush();
+        $sysIdentity->removeRole('sys::forgotcredential');
 
         $this->response->setStatusCode(204);
         return $this->response;

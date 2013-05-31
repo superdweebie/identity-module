@@ -38,7 +38,7 @@ return array(
                             ]
                         ],
                         'extension.dojo' => [
-                            'persist_to_file' => false,
+                            'flat_file_strategy' => 'ignore',
                             'file_paths' => [[
                                 'filter' => 'Sds/IdentityClient',
                                 'path' => 'public/dev-assets'
@@ -54,7 +54,10 @@ return array(
                                     'generator' => 'generator.dojo.input',
                                     'class'     => 'Sds\IdentityModule\DataModel\Identity',
                                     'options'   => [
-                                        'field' => 'identityName'
+                                        'field' => 'identityName',
+                                        'params'=> [
+                                            'label' => 'username'
+                                        ]
                                     ]
                                 ],
                                 'Sds/IdentityClient/Identity/IdentityName/Validator.js' => [
@@ -68,7 +71,11 @@ return array(
                                     'generator' => 'generator.dojo.input',
                                     'class'     => 'Sds\IdentityModule\DataModel\Identity',
                                     'options'   => [
-                                        'field' => 'credential'
+                                        'mixins'=> ['Sds/Form/PasswordTextBox'],
+                                        'field' => 'credential',
+                                        'params'=> [
+                                            'label' => 'password'
+                                        ]
                                     ]
                                 ],
                                 'Sds/IdentityClient/Identity/Credential/Validator.js' => [

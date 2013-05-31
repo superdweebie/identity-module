@@ -26,10 +26,10 @@ use Sds\DoctrineExtensions\Annotation\Annotations as Sds;
  * @ODM\Document
  * @Sds\Serializer\ClassName
  * @Sds\AccessControl({
- *     @Sds\Permission\Basic(roles="*",     allow={"read", "create"}),
- *     @Sds\Permission\Basic(roles="owner", allow="update::*",        deny="update::roles"),
- *     @Sds\Permission\Basic(roles="forgotCredentialController", allow="update::credential"),
- *     @Sds\Permission\Basic(roles="admin", allow={"delete", "update::*"})
+ *     @Sds\Permission\Basic(roles="*",                     allow={"read", "create"}                      ),
+ *     @Sds\Permission\Basic(roles="owner",                 allow="update::*",        deny="update::roles"),
+ *     @Sds\Permission\Basic(roles="sys::forgotcredential", allow="update::credential"                    ),
+ *     @Sds\Permission\Basic(roles="admin",                 allow={"delete", "update::*"}                 )
  * })
  *
  */
