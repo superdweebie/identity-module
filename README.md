@@ -1,3 +1,5 @@
+DEPRECIATED see <a href="http/github.com/zoopcommcerce/gomi-module">gomi-module</a>
+
 Sds IdentityModule
 ==================
 
